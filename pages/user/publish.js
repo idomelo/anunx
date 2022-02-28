@@ -12,6 +12,10 @@ import {
   Select,
   IconButton,
   Button,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
 } from '@mui/material'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
@@ -207,7 +211,7 @@ export default function publish() {
               <Typography component="h6" variant="h6" gutterBottom>
                 Descrição
               </Typography>
-              <Typography component="h6" variant="body2">
+              <Typography component="div" variant="body2">
                 Escreva os detalhes do que está vendendo:
               </Typography>
               <TextField 
@@ -216,6 +220,23 @@ export default function publish() {
                 variant="outlined"
                 fullWidth
               />
+            </BoxStyled>
+          </Container>
+
+          <Container maxWidth="md">
+            <BoxStyled>
+              <Typography component="h6" variant="h6">
+                Preço
+              </Typography>
+              <br />
+              <FormControl fullWidth variant="outlined">
+                <InputLabel>Valor</InputLabel>
+                <OutlinedInput 
+                  onChange={() => {}}
+                  startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+                  label="Valor"
+                />
+              </FormControl>
             </BoxStyled>
           </Container>
 
