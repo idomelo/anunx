@@ -4,7 +4,6 @@ import Link from 'next/link'
 
 const ContainerFooter = styled(Container)(({ theme }) => ({
   borderTop: `1px solid ${ theme.palette.divider}`,
-  marginTop: theme.spacing(8),
   paddingTop: theme.spacing(3),
   paddingBottom: theme.spacing(3),
   [theme.breakpoints.up('sm')]: {
@@ -32,14 +31,14 @@ export default function Footer() {
             </Link>
           </Box>
         </Grid>
-        <Grid item xs={6} sm={3} textAlign="center">
+        <Grid item xs={6} sm={3} textAlign="center" >
           <Box>
             <Link href="#!">
               <Typography color="textSecondary" variant="subtitle1">Anunciar e Vender</Typography>
             </Link>
           </Box>
         </Grid>
-        <Grid item xs={6} sm={3} textAlign="center">
+        <Grid item xs={6} sm={3} textAlign="center" >
           <Box>
             <Link href="#!">
               <Typography color="textSecondary" variant="subtitle1">Plano Profissional</Typography>

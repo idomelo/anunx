@@ -101,7 +101,7 @@ export default function publish() {
   return (
     <>
       <TemplateDefault>
-        <Container maxWidth="sm" sx={{padding: theme.spacing(8, 0, 6)}}>
+        <Container maxWidth="sm">
           <Typography component="h1" variant="h3" align="center">
             Publicar Anúncio
           </Typography>
