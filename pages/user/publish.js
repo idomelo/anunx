@@ -9,14 +9,17 @@ import {
   Stack,
   Container,
   TextField,
+  Input,
   Typography,
   Select,
+  MenuItem,
   IconButton,
   Button,
   FormControl,
   InputLabel,
   OutlinedInput,
   InputAdornment,
+  FormHelperText,
 } from '@mui/material'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
@@ -25,9 +28,15 @@ import { styled } from '@mui/material/styles'
 
 const validationSchema = yup.object().shape({
   title: yup.string()
-    .required('Campo Obrigatório')
+    .required('*Campo Obrigatório')
     .min(6, 'Escreva um Título maior')
     .max(50, 'Título muito grande'),
+  category: yup.string()
+  .required('*Campo Obrigatório'),
+  description: yup.string()
+    .required('*Campo Obrigatório')
+    .min(25, 'Escreva uma Descrição maior')
+    .max(100, 'Descrição muito grande'),
 })
 
 const BoxStyled = styled(Box)(({ theme }) => ({
@@ -122,6 +131,8 @@ export default function publish() {
         <Formik
         initialValues={{ 
           title: '',
+          category: '',
+          description:'',
         }}
         validationSchema={validationSchema}
         onSubmit={(values)=> {
@@ -140,52 +151,54 @@ export default function publish() {
                 <Stack spacing={2} sx={{alignItems: 'center'}}>
                   <Container maxWidth="md">
                     <BoxStyled>
+
                       <Typography component="h6" variant="h6" gutterBottom>
                         Título do Anúncio:
                       </Typography>
-                      <TextField
-                        name="title"
-                        value={values.title}
-                        onChange={handleChange}
-                        size="small"
-                        variant="standard"
-                        placeholder="Ex.: Bicicleta Aro 18 com garantia"
-                        fullWidth
-                        error={Boolean(errors.title)}
-                        helperText={errors.title}
-                      />
+                      <FormControl error={Boolean(errors.title)} fullWidth>
+                        <Input
+                          name="title"
+                          onChange={handleChange}
+                          value={values.title}
+                          placeholder="Ex.: Bicicleta Aro 18 com garantia"
+                        />
+                        <FormHelperText>
+                          {errors.title}
+                        </FormHelperText>
+                      </FormControl>
 
                       <br/><br/>
                       <Typography component="h6" variant="h6">
                         Categoria
                       </Typography>
-                      <Select 
-                        native
-                        variant='standard'
-                        value=""
-                        fullWidth
-                        onChange={() => {}}
-                        inputProps={{
-                          name: 'age',
-                        }}
-                      >
-                        <option value="">Selecione</option>
-                        <option value={1}>Bebê e Crianças</option>
-                        <option value={1}>Agricultura</option>
-                        <option value={1}>Moda</option>
-                        <option value={1}>Carros, Motos e Barcos</option>
-                        <option value={1}>Serviços</option>
-                        <option value={1}>Lazer</option>
-                        <option value={1}>Animais</option>
-                        <option value={1}>Móveis, Casa e Jardim</option>
-                        <option value={1}>imóveis</option>
-                        <option value={1}>Equipamentos e Ferramentas</option>
-                        <option value={1}>Celulares e Tablets</option>
-                        <option value={1}>Esporte</option>
-                        <option value={1}>Tecnologia</option>
-                        <option value={1}>Emprego</option>
-                        <option value={1}>Outros</option>
-                      </Select>
+                      <FormControl fullWidth error={Boolean(errors.category)}>
+                        <Select
+                          name="category"
+                          value={values.category}
+                          fullWidth
+                          onChange={handleChange}
+                        >
+                          <MenuItem value="Bebê e Crianças">Bebê e Crianças</MenuItem>
+                          <MenuItem value="Agricultura">Agricultura</MenuItem>
+                          <MenuItem value="Moda">Moda</MenuItem>
+                          <MenuItem value="Carros, Motos e Barcos">Carros, Motos e Barcos</MenuItem>
+                          <MenuItem value="Serviços">Serviços</MenuItem>
+                          <MenuItem value="Lazer">Lazer</MenuItem>
+                          <MenuItem value="Animais">Animais</MenuItem>
+                          <MenuItem value="Móveis, Casa e Jardim">Móveis, Casa e Jardim</MenuItem>
+                          <MenuItem value="imóveis">imóveis</MenuItem>
+                          <MenuItem value="Equipamentos e Ferramentas">Equipamentos e Ferramentas</MenuItem>
+                          <MenuItem value="Celulares e Tablets">Celulares e Tablets</MenuItem>
+                          <MenuItem value="Esporte">Esporte</MenuItem>
+                          <MenuItem value="Tecnologia">Tecnologia</MenuItem>
+                          <MenuItem value="Emprego">Emprego</MenuItem>
+                          <MenuItem value="Outros">Outros</MenuItem>
+                        </Select>
+                        <FormHelperText>
+                          {errors.category}
+                        </FormHelperText>
+                      </FormControl>
+
                     </BoxStyled>
                   </Container>
 
@@ -246,12 +259,18 @@ export default function publish() {
                       <Typography component="div" variant="body2">
                         Escreva os detalhes do que está vendendo:
                       </Typography>
-                      <TextField 
-                        multiline
-                        rows={6}
-                        variant="outlined"
-                        fullWidth
-                      />
+                      <FormControl error={Boolean(errors.description)} fullWidth>
+                        <TextField
+                          name="description"
+                          value={values.description}
+                          onChange={handleChange}
+                          multiline
+                          rows={6}
+                        />
+                        <FormHelperText>
+                          {errors.description}
+                        </FormHelperText>
+                      </FormControl>
                     </BoxStyled>
                   </Container>
 
