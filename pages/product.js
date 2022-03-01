@@ -1,3 +1,5 @@
+import Carousel from 'react-material-ui-carousel'
+
 import {
   Container,
   Grid,
@@ -21,6 +23,14 @@ const BoxStyledProduct = styled(Box)(({ theme }) => ({
   boxShadow:' 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
 }))
 
+const ImageWrapper = styled(Card)(({ theme }) => ({
+  height: '100%',
+
+  '& .cardMedia': {
+    paddingTop: '56%'
+  },
+}))
+
 export default function Product() {
   return (
     <TemplateDefault>
@@ -29,7 +39,32 @@ export default function Product() {
           <Grid item xs={8}>
             <Stack spacing={3}>
               <BoxStyledProduct>
-                Carrossel
+                <Carousel
+                  autoPlay= {false}
+                  navButtonsAlwaysVisible={true}
+                  navButtonsProps={{
+                    style: {
+                      color: 'white'
+                    }
+                  }}
+                >
+                  <ImageWrapper>
+                    <CardMedia 
+                      className="cardMedia"
+                      image="https://source.unsplash.com/random?a=1"
+                      title="Título da Imagem"
+                    />
+                  </ImageWrapper>
+
+                  <ImageWrapper>
+                    <CardMedia 
+                      className="cardMedia"
+                      image="https://source.unsplash.com/random?a=2"
+                      title="Título da Imagem"
+                    />
+                  </ImageWrapper>
+
+                </Carousel>
               </BoxStyledProduct>
 
               <BoxStyledProduct textAlign="left">
