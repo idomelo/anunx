@@ -8,7 +8,6 @@ import TemplateDefault from '../../src/templates/Default'
 import {
   Stack,
   Container,
-  TextField,
   Input,
   Typography,
   Select,
@@ -32,11 +31,24 @@ const validationSchema = yup.object().shape({
     .min(6, 'Escreva um Título maior')
     .max(50, 'Título muito grande'),
   category: yup.string()
-  .required('*Campo Obrigatório'),
+    .required('*Campo Obrigatório'),
   description: yup.string()
     .required('*Campo Obrigatório')
     .min(25, 'Escreva uma Descrição maior')
     .max(100, 'Descrição muito grande'),
+  price: yup.number()
+    .typeError('Este campo deve conter apenas números')
+    .required('*Campo Obrigatório')
+    .positive('O preço deve ser maior que zero'),
+  email: yup.string()
+    .required('*Campo Obrigatório')
+    .email('Digite um e-mail válido'),
+  name: yup.string()
+    .required('*Campo Obrigatório'),
+  phone: yup.number()
+    .typeError('Este campo deve conter apenas números')
+    .positive('O número não pode ser negativo')
+    .required('*Campo Obrigatório'),
 })
 
 const BoxStyled = styled(Box)(({ theme }) => ({
@@ -133,6 +145,10 @@ export default function publish() {
           title: '',
           category: '',
           description:'',
+          price: '',
+          email: '',
+          name: '',
+          phone: '',
         }}
         validationSchema={validationSchema}
         onSubmit={(values)=> {
@@ -173,11 +189,19 @@ export default function publish() {
                       </Typography>
                       <FormControl fullWidth error={Boolean(errors.category)}>
                         <Select
+                          displayEmpty
                           name="category"
                           value={values.category}
                           fullWidth
                           onChange={handleChange}
+                          renderValue={(selected) => {
+                            if (selected.length === 0) {
+                              return <em>Selecione</em>
+                            }
+                            return selected
+                          }}
                         >
+                          <MenuItem disabled value=""><em>Selecione</em></MenuItem>
                           <MenuItem value="Bebê e Crianças">Bebê e Crianças</MenuItem>
                           <MenuItem value="Agricultura">Agricultura</MenuItem>
                           <MenuItem value="Moda">Moda</MenuItem>
@@ -260,7 +284,7 @@ export default function publish() {
                         Escreva os detalhes do que está vendendo:
                       </Typography>
                       <FormControl error={Boolean(errors.description)} fullWidth>
-                        <TextField
+                        <OutlinedInput
                           name="description"
                           value={values.description}
                           onChange={handleChange}
@@ -280,13 +304,17 @@ export default function publish() {
                         Preço
                       </Typography>
                       <br />
-                      <FormControl fullWidth variant="outlined">
+                      <FormControl error={Boolean(errors.price)} fullWidth>
                         <InputLabel>Valor</InputLabel>
-                        <OutlinedInput 
-                          onChange={() => {}}
+                        <OutlinedInput
+                          name="price"
+                          onChange={handleChange}
                           startAdornment={<InputAdornment position="start">R$</InputAdornment>}
                           label="Valor"
                         />
+                        <FormHelperText>
+                          {errors.price}
+                        </FormHelperText>
                       </FormControl>
                     </BoxStyled>
                   </Container>
@@ -297,22 +325,47 @@ export default function publish() {
                         Dados de Contato:
                       </Typography>
                       <Stack spacing={1}>
-                        <TextField 
-                          label="Nome"
-                          size="small"
-                          fullWidth
-                        />
-                        <TextField 
-                          label="Email"
-                          size="small"
-                          fullWidth
-                        />
-                        <TextField 
-                          label="Telefone"
-                          size="small"
-                          fullWidth
-                        />
+                        <FormControl error={Boolean(errors.name)} fullWidth size="small">
+                          <InputLabel htmlFor="name">Nome</InputLabel>
+                          <OutlinedInput 
+                            label="Nome"
+                            name="name"
+                            id="name"
+                            onChange={handleChange}
+                            value={values.name}
+                          />
+                          <FormHelperText>
+                            {errors.name}
+                          </FormHelperText>
+                        </FormControl>
 
+                        <FormControl error={Boolean(errors.email)} fullWidth size="small">
+                          <InputLabel htmlFor="email">E-mail</InputLabel>
+                          <OutlinedInput 
+                            label="E-mail"
+                            name="email"
+                            id="email"
+                            onChange={handleChange}
+                            value={values.email}
+                          />
+                          <FormHelperText>
+                            {errors.email}
+                          </FormHelperText>
+                        </FormControl>
+
+                        <FormControl error={Boolean(errors.phone)} fullWidth size="small">
+                          <InputLabel htmlFor="phone">Telefone</InputLabel>
+                          <OutlinedInput 
+                            label="Telefone"
+                            name="phone"
+                            id="phone"
+                            onChange={handleChange}
+                            value={values.phone}
+                          />
+                          <FormHelperText>
+                            {errors.phone}
+                          </FormHelperText>
+                        </FormControl>
                       </Stack>
                     </BoxStyled>
                   </Container>
