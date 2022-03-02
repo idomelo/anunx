@@ -49,6 +49,9 @@ const validationSchema = yup.object().shape({
     .typeError('Este campo deve conter apenas números')
     .positive('O número não pode ser negativo')
     .required('*Campo Obrigatório'),
+  files: yup.array()
+  .required('*Campo Obrigatório')
+  .min(1, 'Envie pelo menos 1 foto'),
 })
 
 const BoxStyled = styled(Box)(({ theme }) => ({
@@ -57,7 +60,7 @@ const BoxStyled = styled(Box)(({ theme }) => ({
   boxShadow:' 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)'
 }))
 
-const Dropzone = styled(Box)(({ theme }) => ({
+const Dropzone = styled(Box)(({ error, theme }) => ({
   display: 'flex',
   cursor: 'pointer',
   justifyContent: 'center',
@@ -67,7 +70,7 @@ const Dropzone = styled(Box)(({ theme }) => ({
   height: 150,
   margin: '0 10px 10px 0',
   backgroundColor: theme.palette.background.default,
-  border: '2px dashed black',
+  border: `2px dashed ${error ? "red" : "black"}`,
 }))
 
 const Thumb = styled(Box)(() => ({
@@ -103,29 +106,6 @@ const Mask = styled(Box)(() => ({
 
 
 export default function publish() {
-  const [files, setFiles] = useState([])
-
-  const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/*',
-    onDrop: (acceptedFile) => {
-      const newFiles = acceptedFile.map(file => {
-        // Para cada arquivo, cria objeto com arquivo recebido e cria URL para acessá-lo
-        return Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })
-      })
-
-      setFiles([
-        ...files,  
-        ...newFiles,
-      ])
-    }
-  })
-
-  const handleRemoveFile = fileName => {
-    const newFileState = files.filter(file => file.name !== fileName)
-    setFiles(newFileState)
-  }
 
   return (
     <>
@@ -141,27 +121,54 @@ export default function publish() {
         <br /><br />
 
         <Formik
-        initialValues={{ 
-          title: '',
-          category: '',
-          description:'',
-          price: '',
-          email: '',
-          name: '',
-          phone: '',
-        }}
-        validationSchema={validationSchema}
-        onSubmit={(values)=> {
-          console.log('ok, enviou o form', values)
-        }}
+          initialValues={{ 
+            title: '',
+            category: '',
+            description:'',
+            price: '',
+            email: '',
+            name: '',
+            phone: '',
+            files: [],
+          }}
+          validationSchema={validationSchema}
+          onSubmit={(values)=> {
+            console.log('ok, enviou o form', values)
+          }}
         >
           {
             ({
+              touched,
               values,
               errors,
               handleChange,
               handleSubmit,
+              setFieldValue
             }) => {
+
+              const {getRootProps, getInputProps} = useDropzone({
+                accept: 'image/*',
+                onDrop: (acceptedFile) => {
+                  const newFiles = acceptedFile.map(file => {
+                    // Para cada arquivo, cria objeto com arquivo recebido e cria URL para acessá-lo
+                    return Object.assign(file, {
+                      preview: URL.createObjectURL(file)
+                    })
+                  })
+            
+                  setFieldValue('files', [
+                    ...values.files,  
+                    ...newFiles,
+                  ])
+                }
+              })
+            
+              const handleRemoveFile = fileName => {
+                const newFileState = values.files.filter(file => file.name !== fileName)
+                setFieldValue('files', newFileState)
+              }
+
+
               return (
               <form onSubmit={handleSubmit}>
                 <Stack spacing={2} sx={{alignItems: 'center'}}>
@@ -171,7 +178,7 @@ export default function publish() {
                       <Typography component="h6" variant="h6" gutterBottom>
                         Título do Anúncio:
                       </Typography>
-                      <FormControl error={Boolean(errors.title)} fullWidth>
+                      <FormControl error={Boolean(errors.title) && touched.title} fullWidth>
                         <Input
                           name="title"
                           onChange={handleChange}
@@ -179,7 +186,7 @@ export default function publish() {
                           placeholder="Ex.: Bicicleta Aro 18 com garantia"
                         />
                         <FormHelperText>
-                          {errors.title}
+                          {touched.title? errors.title : null}
                         </FormHelperText>
                       </FormControl>
 
@@ -187,7 +194,7 @@ export default function publish() {
                       <Typography component="h6" variant="h6">
                         Categoria
                       </Typography>
-                      <FormControl fullWidth error={Boolean(errors.category)}>
+                      <FormControl fullWidth error={Boolean(errors.category) && touched.title}>
                         <Select
                           displayEmpty
                           name="category"
@@ -219,7 +226,7 @@ export default function publish() {
                           <MenuItem value="Outros">Outros</MenuItem>
                         </Select>
                         <FormHelperText>
-                          {errors.category}
+                          {touched.category? errors.category : null}
                         </FormHelperText>
                       </FormControl>
 
@@ -232,23 +239,27 @@ export default function publish() {
                         Imagens
                       </Typography>
                       <Typography component="h6" variant="body2">
-                        A Primeira imagem é a foto Principal do seu Anúncio.
+                        A Primeira imagem é a Principal do seu Anúncio.
                       </Typography>
-
+                      {
+                        errors.files && touched.files
+                          ? <Typography variant="body2" color="error" gutterBottom>{errors.files}</Typography>
+                          : null
+                      }
                       <Box sx={{
                         display: 'flex',
                         flexWrap: 'wrap',
                         marginTop: '10px',
                         alignContent: 'center',
                       }}>
-                        <Dropzone {...getRootProps()}>
-                          <input {...getInputProps()}/>
-                          <Typography variant="body2">
+                        <Dropzone error={touched.files ? errors.files : null} {...getRootProps()}>
+                          <input name="files" {...getInputProps()}/>
+                          <Typography variant="body2" color={errors.files && touched.files? "error" : "textPrimary"}>
                             Clique para adicionar ou arraste uma imagem.
                           </Typography>
                         </Dropzone>
                         {
-                          files.map((file, index) => (
+                          values.files.map((file, index) => (
                             <Thumb 
                               key={file.name}
                               sx={{backgroundImage: `url(${file.preview})`}}
@@ -283,7 +294,7 @@ export default function publish() {
                       <Typography component="div" variant="body2">
                         Escreva os detalhes do que está vendendo:
                       </Typography>
-                      <FormControl error={Boolean(errors.description)} fullWidth>
+                      <FormControl error={Boolean(errors.description) && touched.title} fullWidth>
                         <OutlinedInput
                           name="description"
                           value={values.description}
@@ -292,7 +303,7 @@ export default function publish() {
                           rows={6}
                         />
                         <FormHelperText>
-                          {errors.description}
+                          {touched.description? errors.description : null}
                         </FormHelperText>
                       </FormControl>
                     </BoxStyled>
@@ -304,7 +315,7 @@ export default function publish() {
                         Preço
                       </Typography>
                       <br />
-                      <FormControl error={Boolean(errors.price)} fullWidth>
+                      <FormControl error={Boolean(errors.price) && touched.title} fullWidth>
                         <InputLabel>Valor</InputLabel>
                         <OutlinedInput
                           name="price"
@@ -313,7 +324,7 @@ export default function publish() {
                           label="Valor"
                         />
                         <FormHelperText>
-                          {errors.price}
+                          {touched.price? errors.price : null}
                         </FormHelperText>
                       </FormControl>
                     </BoxStyled>
@@ -325,7 +336,7 @@ export default function publish() {
                         Dados de Contato:
                       </Typography>
                       <Stack spacing={1}>
-                        <FormControl error={Boolean(errors.name)} fullWidth size="small">
+                        <FormControl error={Boolean(errors.name) && touched.title} fullWidth size="small">
                           <InputLabel htmlFor="name">Nome</InputLabel>
                           <OutlinedInput 
                             label="Nome"
@@ -335,11 +346,11 @@ export default function publish() {
                             value={values.name}
                           />
                           <FormHelperText>
-                            {errors.name}
+                            {touched.name? errors.name : null}
                           </FormHelperText>
                         </FormControl>
 
-                        <FormControl error={Boolean(errors.email)} fullWidth size="small">
+                        <FormControl error={Boolean(errors.email) && touched.title} fullWidth size="small">
                           <InputLabel htmlFor="email">E-mail</InputLabel>
                           <OutlinedInput 
                             label="E-mail"
@@ -349,11 +360,11 @@ export default function publish() {
                             value={values.email}
                           />
                           <FormHelperText>
-                            {errors.email}
+                            {touched.email? errors.email : null}
                           </FormHelperText>
                         </FormControl>
 
-                        <FormControl error={Boolean(errors.phone)} fullWidth size="small">
+                        <FormControl error={Boolean(errors.phone) && touched.title} fullWidth size="small">
                           <InputLabel htmlFor="phone">Telefone</InputLabel>
                           <OutlinedInput 
                             label="Telefone"
@@ -363,7 +374,7 @@ export default function publish() {
                             value={values.phone}
                           />
                           <FormHelperText>
-                            {errors.phone}
+                            {touched.phone? errors.phone : null}
                           </FormHelperText>
                         </FormControl>
                       </Stack>
