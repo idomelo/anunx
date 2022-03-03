@@ -7,7 +7,6 @@ import {
   Avatar,
   Button,
   CssBaseline,
-  TextField,
   FormControlLabel,
   Checkbox,
   Link,
@@ -22,19 +21,6 @@ import {
 } from '@mui/material'
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Todos os direitos Reservados © '}
-      <Link color="inherit" href="https://github.com/idomelo">
-        Ido Melo
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
 
 export default function SignUp() {
 
@@ -66,7 +52,7 @@ export default function SignUp() {
                 handleSubmit,
               }) => {
                 return (
-                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                  <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
 
                       <Grid item xs={12}>
@@ -80,7 +66,7 @@ export default function SignUp() {
                             onChange={handleChange}
                           />
                           <FormHelperText>
-                            { touched.name ? errors.name : null }
+                            { touched.name && errors.name }
                           </FormHelperText>
                         </FormControl>
                       </Grid>
@@ -97,7 +83,7 @@ export default function SignUp() {
                             onChange={handleChange}
                           />
                           <FormHelperText>
-                            { touched.email ? errors.email : null }
+                            { touched.email && errors.email }
                           </FormHelperText>
                         </FormControl>
                       </Grid>
@@ -113,7 +99,7 @@ export default function SignUp() {
                             onChange={handleChange}
                           />
                           <FormHelperText>
-                            { touched.password ? errors.password : null }
+                            { touched.password && errors.password }
                           </FormHelperText>
                         </FormControl>
                       </Grid>
@@ -129,7 +115,7 @@ export default function SignUp() {
                             onChange={handleChange}
                           />
                           <FormHelperText>
-                            { touched.passwordConf ? errors.passwordConf : null }
+                            { touched.passwordConf && errors.passwordConf }
                           </FormHelperText>
                         </FormControl>
                       </Grid>

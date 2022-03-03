@@ -54,7 +54,7 @@ export default function publish() {
 
 
               return (
-              <form onSubmit={handleSubmit}>
+              <form noValidate onSubmit={handleSubmit}>
                 <Stack spacing={2} sx={{alignItems: 'center'}}>
                   <Container maxWidth="md">
                     <BoxStyled>
@@ -62,7 +62,7 @@ export default function publish() {
                       <Typography component="h6" variant="h6" gutterBottom>
                         Título do Anúncio:
                       </Typography>
-                      <FormControl error={Boolean(errors.title) && touched.title} fullWidth>
+                      <FormControl error={errors.title && touched.title} fullWidth>
                         <Input
                           name="title"
                           onChange={handleChange}
@@ -70,7 +70,7 @@ export default function publish() {
                           placeholder="Ex.: Bicicleta Aro 18 com garantia"
                         />
                         <FormHelperText>
-                          {touched.title? errors.title : null}
+                          { touched.title && errors.title }
                         </FormHelperText>
                       </FormControl>
 
@@ -78,7 +78,7 @@ export default function publish() {
                       <Typography component="h6" variant="h6">
                         Categoria
                       </Typography>
-                      <FormControl fullWidth error={Boolean(errors.category) && touched.title}>
+                      <FormControl fullWidth error={errors.category && touched.category}>
                         <Select
                           displayEmpty
                           name="category"
@@ -110,7 +110,7 @@ export default function publish() {
                           <MenuItem value="Outros">Outros</MenuItem>
                         </Select>
                         <FormHelperText>
-                          {touched.category? errors.category : null}
+                          {touched.category && errors.category}
                         </FormHelperText>
                       </FormControl>
 
@@ -137,7 +137,7 @@ export default function publish() {
                       <Typography component="div" variant="body2">
                         Escreva os detalhes do que está vendendo:
                       </Typography>
-                      <FormControl error={Boolean(errors.description) && touched.title} fullWidth>
+                      <FormControl error={errors.description && touched.description} fullWidth>
                         <OutlinedInput
                           name="description"
                           value={values.description}
@@ -146,7 +146,7 @@ export default function publish() {
                           rows={6}
                         />
                         <FormHelperText>
-                          {touched.description? errors.description : null}
+                          {touched.description && errors.description}
                         </FormHelperText>
                       </FormControl>
                     </BoxStyled>
@@ -158,7 +158,7 @@ export default function publish() {
                         Preço
                       </Typography>
                       <br />
-                      <FormControl error={Boolean(errors.price) && touched.title} fullWidth>
+                      <FormControl error={errors.price && touched.price} fullWidth>
                         <InputLabel>Valor</InputLabel>
                         <OutlinedInput
                           name="price"
@@ -167,7 +167,7 @@ export default function publish() {
                           label="Valor"
                         />
                         <FormHelperText>
-                          {touched.price? errors.price : null}
+                          {touched.price && errors.price}
                         </FormHelperText>
                       </FormControl>
                     </BoxStyled>
@@ -179,7 +179,7 @@ export default function publish() {
                         Dados de Contato:
                       </Typography>
                       <Stack spacing={1}>
-                        <FormControl error={Boolean(errors.name) && touched.title} fullWidth size="small">
+                        <FormControl error={errors.name && touched.name} fullWidth size="small">
                           <InputLabel htmlFor="name">Nome</InputLabel>
                           <OutlinedInput 
                             label="Nome"
@@ -189,11 +189,11 @@ export default function publish() {
                             value={values.name}
                           />
                           <FormHelperText>
-                            {touched.name? errors.name : null}
+                            {touched.name && errors.name}
                           </FormHelperText>
                         </FormControl>
 
-                        <FormControl error={Boolean(errors.email) && touched.title} fullWidth size="small">
+                        <FormControl error={errors.email && touched.email} fullWidth size="small">
                           <InputLabel htmlFor="email">E-mail</InputLabel>
                           <OutlinedInput 
                             label="E-mail"
@@ -203,11 +203,11 @@ export default function publish() {
                             value={values.email}
                           />
                           <FormHelperText>
-                            {touched.email? errors.email : null}
+                            {touched.email && errors.email}
                           </FormHelperText>
                         </FormControl>
 
-                        <FormControl error={Boolean(errors.phone) && touched.title} fullWidth size="small">
+                        <FormControl error={errors.phone && touched.phone} fullWidth size="small">
                           <InputLabel htmlFor="phone">Telefone</InputLabel>
                           <OutlinedInput 
                             label="Telefone"
@@ -217,7 +217,7 @@ export default function publish() {
                             value={values.phone}
                           />
                           <FormHelperText>
-                            {touched.phone? errors.phone : null}
+                            {touched.phone && errors.phone}
                           </FormHelperText>
                         </FormControl>
                       </Stack>

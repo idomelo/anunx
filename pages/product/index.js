@@ -15,7 +15,7 @@ import {
 
 import { styled } from '@mui/material/styles'
 
-import TemplateDefault from '../src/templates/Default'
+import TemplateDefault from '../../src/templates/Default'
 
 const BoxStyledProduct = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.white,
