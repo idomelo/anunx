@@ -1,35 +1,17 @@
-import dbConnect from '../../src/utils/dbConnect'
-import { crypto } from '../../src/utils/password'
-import UsersModel from '../../src/models/users'
+import nextConnect from 'next-connect'
+import { get, post } from '../../src/controllers/users'
 
-export default async function users(req, res) {
-  const { method } = req
+const handler = nextConnect({
+  onError: (err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).end("Something broke!");
+  },
+  onNoMatch: (req, res) => {
+    res.status(404).end("Page is not found");
+  },
+})
+  .get(get)
+  .post(post)
 
-  switch(method) {
-    case 'GET':
-      await dbConnect()
-      res.status(200).json({success: true})
-      break
-    
-    case 'POST':
-      const {
-        name,
-        email,
-        password,
-      } = req.body
 
-      const passwordCrypto = await crypto(password)
-
-      await dbConnect()
-
-      const user = new UsersModel({
-        name,
-        email,
-        password: passwordCrypto,
-      })
-
-      user.save()
-
-      res.status(201).json({ success: true })
-  }
-}
+export default handler
