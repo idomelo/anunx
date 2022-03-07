@@ -26,10 +26,10 @@ export default function publish() {
     <>
       <TemplateDefault>
         <Container maxWidth="sm">
-          <Typography component="h1" variant="h3" align="center">
+          <Typography component="h1" fontSize='h4.fontSize' align="center">
             Publicar Anúncio
           </Typography>
-          <Typography component="h6" variant="h6" align="center">
+          <Typography component="h6" variant="h6" fontWeight='light' align="center">
             Quanto mais detalhado, melhor!
           </Typography>
         </Container>

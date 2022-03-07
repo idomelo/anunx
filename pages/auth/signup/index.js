@@ -1,11 +1,9 @@
 import { Formik } from 'formik'
-import TemplateDefault from '../../../src/templates/Default'
-import { initialValues, validationSchema } from './formValues'
-import { BoxStyled } from './style'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 import {
   Avatar,
-  Button,
   CssBaseline,
   FormControlLabel,
   Checkbox,
@@ -22,7 +20,28 @@ import {
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
+import TemplateDefault from '../../../src/templates/Default'
+import { initialValues, validationSchema } from './formValues'
+import { BoxStyled } from './style'
+import ButtonLoading from '../../../src/components/ButtonLoading'
+import useToasty from '../../../src/contexts/Toasty'
+
 export default function SignUp() {
+  const { setToasty } = useToasty()
+  const router = useRouter()
+
+  const handleFormSubmit = async values => {
+    const response = await axios.post('/api/users', values)
+
+    if(response.data.success) {
+      setToasty({
+        open: true,
+        severity: 'success',
+        text: 'Cadastro realizado com sucesso!',
+      })
+      router.push('/auth/signin')
+    }
+  }
 
   return (
     <TemplateDefault>
@@ -39,9 +58,7 @@ export default function SignUp() {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values)=> {
-              console.log('ok, enviou o form', values)
-            }}
+            onSubmit={handleFormSubmit}
           >
             {
               ({
@@ -50,6 +67,7 @@ export default function SignUp() {
                 errors,
                 handleChange,
                 handleSubmit,
+                isSubmitting,
               }) => {
                 return (
                   <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
@@ -127,15 +145,12 @@ export default function SignUp() {
                         />
                       </Grid>
                     </Grid>
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      // disabled={isSubmitting}
-                      sx={{ mt: 3, mb: 2 }}
-                    >
-                      Cadastre-se
-                    </Button>
+
+                    <ButtonLoading 
+                      text="Cadastre-se"
+                      loading={isSubmitting}
+                    />
+
                     <Grid container justifyContent="flex-end">
                       <Grid item>
                         <Link href="#!" variant="body2">

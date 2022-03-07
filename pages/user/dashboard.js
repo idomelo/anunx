@@ -13,7 +13,7 @@ export default function Home() {
     <>
     <TemplateDefault>
       <Container maxWidth="sm" >
-        <Typography component="h1" variant="h3" align="center">
+        <Typography component="h1" fontSize='h4.fontSize' align="center">
           Meus Anúncios
         </Typography>
         <Button variant="contained" sx={{ margin: '30px auto', display:'block'}}>

@@ -29,7 +29,7 @@ export default function ButtonAppBar() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Anunx
             </Typography>
-            <Link href="/user/publish">
+            <Link passHref href="/user/publish">
               <Button color="inherit" variant="outlined">Anunciar e Vender</Button>
             </Link>
 
@@ -48,10 +48,10 @@ export default function ButtonAppBar() {
               open={openUserMenu}
               onClose={() => setAnchorUserMenu(null)}
             >
-              <Link href="/user/dashboard">
+              <Link passHref href="/user/dashboard">
                 <MenuItem>Meus Anúncios</MenuItem>
               </Link>
-              <Link href="/user/publish">
+              <Link passHref href="/user/publish">
                 <MenuItem>Publicar Novo Anúncio</MenuItem>
               </Link>
               <Divider />
