@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <TemplateDefault>
       <Container maxWidth="md">
-        <Typography component="h1" variant="h3" align="center">
+        <Typography component="h1" fontSize='h4.fontSize' align="center">
           O que deseja encontrar?
         </Typography>
 
