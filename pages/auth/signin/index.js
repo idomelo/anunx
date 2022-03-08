@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
+import { Formik } from 'formik'
 const axios = require('axios')
+import { useRouter } from 'next/router'
 
 import {
   Avatar,
-  Button,
   CssBaseline,
-  TextField,
   FormControlLabel,
   Checkbox,
   Link,
@@ -14,28 +14,22 @@ import {
   Grid,
   Box,
   Typography,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  FormHelperText,
 } from '@mui/material'
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import TemplateDefault from '../../../src/templates/Default'
+import { initialValues, validationSchema } from './formValues'
+import ButtonLoading from '../../../src/components/ButtonLoading'
+import useToasty from '../../../src/contexts/Toasty'
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
-
-const theme = createTheme()
-
-export default function SignInSide() {
+export default function SignIn() {
   const [ bgImage, setBgImage ] = useState('')
+  const { setToasty } = useToasty()
+  const router = useRouter()
 
   useEffect((req, res) => {
     axios.get('https://api.iconscout.com/v3/search?query=ecommerce&product_type=item&asset=illustration&price=free&per_page=10&page=1&formats%5B%5D=svg&sort=relevant&styles%5B%5D=', {
@@ -50,18 +44,12 @@ export default function SignInSide() {
     })
   }, [])
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    })
+  const handleFormSubmit = async values => {
+    
   }
   
   return (
-    <ThemeProvider theme={theme}>
+    <TemplateDefault>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
@@ -72,8 +60,6 @@ export default function SignInSide() {
           sx={{
             backgroundImage: `url(${bgImage})`,
             backgroundRepeat: 'no-repeat',
-            // backgroundColor: (t) =>
-            //   t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -88,62 +74,96 @@ export default function SignInSide() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Acesse a sua conta
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
-            </Box>
+
+            <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleFormSubmit}
+          >
+            {
+              ({
+                touched,
+                values,
+                errors,
+                handleChange,
+                handleSubmit,
+                isSubmitting,
+              }) => {
+                return (
+                  <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                    <Grid container spacing={2}>
+
+                      <Grid item xs={12}>
+                          <FormControl fullWidth error={errors.email && touched.email}>
+                            <InputLabel>Email*</InputLabel>
+                            <OutlinedInput 
+                              name="email"
+                              id="email"
+                              type="email"
+                              value={values.email}
+                              label="Email*"
+                              onChange={handleChange}
+                            />
+                            <FormHelperText>
+                              { touched.email && errors.email }
+                            </FormHelperText>
+                          </FormControl>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                          <FormControl fullWidth error={errors.password && touched.password}>
+                            <InputLabel>Senha*</InputLabel>
+                            <OutlinedInput 
+                              name="password"
+                              type="password"
+                              value={values.password}
+                              label="Senha*"
+                              onChange={handleChange}
+                            />
+                            <FormHelperText>
+                              { touched.password && errors.password }
+                            </FormHelperText>
+                          </FormControl>
+                        </Grid>
+                    
+                    </Grid>
+
+                    <FormControlLabel
+                      control={<Checkbox value="remember" color="primary" />}
+                      label="Lembrar de mim"
+                    />
+
+                    <ButtonLoading 
+                      text="Entrar"
+                      loading={isSubmitting}
+                    />
+
+                    <Grid container>
+                      <Grid item xs>
+                        <Link href="#!" variant="body2">
+                          Esqueceu sua Senha?
+                        </Link>
+                      </Grid>
+                      <Grid item>
+                        <Link href="#!" variant="body2">
+                          {"Não tem uma conta? Cadastre-se"}
+                        </Link>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                )
+              }
+            }
+          </Formik>
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </TemplateDefault>
   )
 }

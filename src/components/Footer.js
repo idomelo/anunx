@@ -31,7 +31,6 @@ function Copyright(props) {
   )
 }
 
-
 export default function Footer() {
   /* Depois adicionar Links */
   return (
