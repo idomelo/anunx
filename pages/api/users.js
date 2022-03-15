@@ -3,7 +3,7 @@ import { get, post } from '../../src/controllers/users'
 
 const handler = nextConnect({
   onError: (err, req, res, next) => {
-    console.error(err.stack);
+    console.error(err);
     res.status(500).end("Something broke!");
   },
   onNoMatch: (req, res) => {
