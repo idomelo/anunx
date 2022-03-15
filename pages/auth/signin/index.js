@@ -11,22 +11,30 @@ import {
   FormControlLabel,
   Checkbox,
   Link,
-  Paper,
   Grid,
   Box,
   Typography,
+  Divider,
   FormControl,
   InputLabel,
   OutlinedInput,
   FormHelperText,
   Alert,
+  Button,
+  Container,
 } from '@mui/material'
 
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import {
+  Facebook as FacebookIcon,
+  Google as GoogleIcon,
+  LockOutlined as LockOutlinedIcon,
+} from '@mui/icons-material'
+
 import TemplateDefault from '../../../src/templates/Default'
 import { initialValues, validationSchema } from './formValues'
 import ButtonLoading from '../../../src/components/ButtonLoading'
 import useToasty from '../../../src/contexts/Toasty'
+import { BoxStyled } from '../signup/style'
 
 export default function SignIn() {
   const [ bgImage, setBgImage ] = useState('')
@@ -36,18 +44,17 @@ export default function SignIn() {
   const { data: session, status } = useSession()
   console.log(session, status, router.query.i)
 
-  // useEffect((req, res) => {
-  //   axios.get('https://api.iconscout.com/v3/search?query=ecommerce&product_type=item&asset=illustration&price=free&per_page=10&page=1&formats%5B%5D=svg&sort=relevant&styles%5B%5D=', {
-  //     headers: {
-  //       'Client-ID': '188996231667293'
-  //     }
-  //   }).then((res) => {
-  //     const imagesList = res.data.response.items.data
-  //     const randomIndex = Math.floor(Math.random() * imagesList.length)
-  //     const randomImage = imagesList[randomIndex].urls.svg
-  //     setBgImage(randomImage)
-  //   })
-  // }, [])
+  const handleGoogleLogin = () => {
+    signIn('google', {
+      callbackUrl: 'http://localhost:3000/user/dashboard'
+    })
+  }
+
+  const handleFacebookLogin = () => {
+    signIn('facebook', {
+      callbackUrl: 'http://localhost:3000/user/dashboard'
+    })
+  }
 
   const handleFormSubmit = async values => {
     signIn('credentials', {
@@ -59,41 +66,46 @@ export default function SignIn() {
   
   return (
    
-    <Grid container component="main" sx={{ height: '100vh' }}>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Grid
-        item
-        xs={false}
-        sm={4}
-        md={7}
-        sx={{
-          // backgroundImage: `url(${bgImage})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-        }}
-      />
-      <Grid item xs={12} sm={8} md={5} component={Paper} square>
-        <Box
-          sx={{
-            my: 8,
-            mx: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Acesse a sua conta
-          </Typography>
+      <BoxStyled>
+        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Acesse a sua conta
+        </Typography>
 
-          <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleFormSubmit}
+        <Grid container spacing={2} sx={{mt: 1, mb: 2,}}>
+          <Grid item xs={12}>
+            <Button 
+            variant="contained"
+            fullWidth 
+            startIcon={<FacebookIcon />}
+            onClick={handleFacebookLogin}
+            >
+              Entrar com o facebook
+            </Button>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button 
+            variant="contained"
+            fullWidth 
+            startIcon={<GoogleIcon />}
+            onClick={handleGoogleLogin}
+            >
+              Entrar com o Google
+            </Button>
+          </Grid>
+        </Grid>
+
+        <Divider sx={{width: '100%'}}> ou </Divider>
+
+        <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleFormSubmit}
         >
           {
             ({
@@ -105,7 +117,7 @@ export default function SignIn() {
               isSubmitting,
             }) => {
               return (
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt:2 }}>
                   {
                     router.query.i === '1'
                       ? (
@@ -131,24 +143,24 @@ export default function SignIn() {
                           <FormHelperText>
                             { touched.email && errors.email }
                           </FormHelperText>
-                        </FormControl>
-                      </Grid>
+                      </FormControl>
+                    </Grid>
 
-                      <Grid item xs={12}>
-                        <FormControl fullWidth error={errors.password && touched.password}>
-                          <InputLabel>Senha*</InputLabel>
-                          <OutlinedInput 
-                            name="password"
-                            type="password"
-                            value={values.password}
-                            label="Senha*"
-                            onChange={handleChange}
-                          />
-                          <FormHelperText>
-                            { touched.password && errors.password }
-                          </FormHelperText>
-                        </FormControl>
-                      </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth error={errors.password && touched.password}>
+                        <InputLabel>Senha*</InputLabel>
+                        <OutlinedInput 
+                          name="password"
+                          type="password"
+                          value={values.password}
+                          label="Senha*"
+                          onChange={handleChange}
+                        />
+                        <FormHelperText>
+                          { touched.password && errors.password }
+                        </FormHelperText>
+                      </FormControl>
+                    </Grid>
                   
                   </Grid>
 
@@ -163,15 +175,18 @@ export default function SignIn() {
                   />
 
                   <Grid container>
-                    <Grid item xs>
+                    <Grid item xs={12} md={6}>
                       <Link href="#!" variant="body2">
                         Esqueceu sua Senha?
                       </Link>
                     </Grid>
-                    <Grid item>
-                      <Link href="#!" variant="body2">
-                        {"Não tem uma conta? Cadastre-se"}
-                      </Link>
+                    <Grid item xs={12} md={6}>
+                      <Typography variant="body2">
+                        Não tem uma conta?
+                        <Link href="#!">
+                          {" Cadastre-se"}
+                        </Link>
+                      </Typography>
                     </Grid>
                   </Grid>
                 </Box>
@@ -179,8 +194,7 @@ export default function SignIn() {
             }
           }
         </Formik>
-        </Box>
-      </Grid>
-    </Grid>
+      </BoxStyled>
+    </Container>
   )
 }
