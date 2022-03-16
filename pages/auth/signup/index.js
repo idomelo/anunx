@@ -18,13 +18,12 @@ import {
   FormHelperText,
 } from '@mui/material'
 
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-
 import TemplateDefault from '../../../src/templates/Default'
 import { initialValues, validationSchema } from './formValues'
 import { BoxStyled } from './style'
 import ButtonLoading from '../../../src/components/ButtonLoading'
 import useToasty from '../../../src/contexts/Toasty'
+import Image from 'next/image'
 
 export default function SignUp() {
   const { setToasty } = useToasty()
@@ -48,9 +47,11 @@ export default function SignUp() {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <BoxStyled>
-          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <Link passHref href='/'>
+            <Avatar sx={{ m: 1}} >
+              <Image src='/shop.svg' layout='fill' alt='' />
+            </Avatar>
+          </Link>
           <Typography component="h1" variant="h5">
             Crie a sua conta. É grátis!
           </Typography>

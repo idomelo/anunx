@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { useSession, signOut } from 'next-auth/react'
 
 import {
   Container,
@@ -18,6 +19,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 export default function ButtonAppBar() {
   const [ anchorUseMenu, setAnchorUserMenu ] = useState(false)
+  const { data: session  } = useSession()
 
   const openUserMenu = Boolean(anchorUseMenu)
 
@@ -29,19 +31,28 @@ export default function ButtonAppBar() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Anunx
             </Typography>
-            <Link passHref href="/user/publish">
+            <Link passHref href={
+              session ? '/user/publish' : '/auth/signin'
+            }>
               <Button color="inherit" variant="outlined">Anunciar e Vender</Button>
             </Link>
 
-            <Button sx={{ marginLeft: 2 }} onClick={(e) => setAnchorUserMenu(e.currentTarget)}
-              size="medium" 
-              color="secondary" startIcon={
-                true === false
-                  ? <Avatar src="" />
-                  : <AccountCircleIcon />
-            } >
-              Ido F. Melo
-            </Button>
+            {
+              session 
+                ? (
+                  <Button sx={{ marginLeft: 2 }} onClick={(e) => setAnchorUserMenu(e.currentTarget)}
+                    size="medium" 
+                    color="secondary" startIcon={
+                      session.user.image
+                        ? <Avatar src={session.user.image} />
+                        : <AccountCircleIcon />
+                  }>
+                    {session.user.name}
+                  </Button>
+
+                ) : null
+            }
+
 
             <Menu
               anchorEl={anchorUseMenu}
@@ -55,7 +66,7 @@ export default function ButtonAppBar() {
                 <MenuItem>Publicar Novo Anúncio</MenuItem>
               </Link>
               <Divider />
-              <MenuItem>Sair</MenuItem>
+              <MenuItem onClick={() => signOut({ callbackUrl: '/' })}>Sair</MenuItem>
             </Menu>
 
           </Toolbar>

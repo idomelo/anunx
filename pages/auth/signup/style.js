@@ -9,4 +9,10 @@ export const BoxStyled = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
   marginTop: 8,
   boxShadow: 'rgb(153 153 153 / 20%) 0px 2px 4px 0px',
+
+  [theme.breakpoints.down('md')]: {
+    backgroundColor: theme.palette.background.default,
+    boxShadow: 'none',
+    padding: 0,
+  },
 }))

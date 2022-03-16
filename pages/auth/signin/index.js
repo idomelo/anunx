@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import { useSession, signIn, signOut } from "next-auth/react"
 
 import {
@@ -27,7 +28,6 @@ import {
 import {
   Facebook as FacebookIcon,
   Google as GoogleIcon,
-  LockOutlined as LockOutlinedIcon,
 } from '@mui/icons-material'
 
 import TemplateDefault from '../../../src/templates/Default'
@@ -69,9 +69,11 @@ export default function SignIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <BoxStyled>
-        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <Link passHref href='/'>
+          <Avatar sx={{ m: 1}} >
+            <Image src='/shop.svg' layout='fill' alt='' />
+          </Avatar>
+        </Link>
         <Typography component="h1" variant="h5">
           Acesse a sua conta
         </Typography>
