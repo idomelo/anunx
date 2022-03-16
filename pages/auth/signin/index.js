@@ -36,23 +36,25 @@ import ButtonLoading from '../../../src/components/ButtonLoading'
 import useToasty from '../../../src/contexts/Toasty'
 import { BoxStyled } from '../signup/style'
 
-export default function SignIn({ APP_URL }) {
+export default function Signin({ APP_URL }) {
   const [ bgImage, setBgImage ] = useState('')
   const { setToasty } = useToasty()
   const router = useRouter()
+
+  console.log(APP_URL)
 
   const { data: session, status } = useSession()
   console.log(session, status, router.query.i)
 
   const handleGoogleLogin = () => {
     signIn('google', {
-      callbackUrl: `${process.env.APP_URL}/user/dashboard`
+      callbackUrl: `${APP_URL}/user/dashboard`
     })
   }
 
   const handleFacebookLogin = () => {
     signIn('facebook', {
-      callbackUrl: `${process.env.APP_URL}/user/dashboard`
+      callbackUrl: `${APP_URL}/user/dashboard`
     })
   }
 
@@ -60,7 +62,7 @@ export default function SignIn({ APP_URL }) {
     signIn('credentials', {
       email: values.email,
       password: values.password,
-      callbackUrl: `${process.env.APP_URL}/user/dashboard`
+      callbackUrl: `${APP_URL}/user/dashboard`
     })
   }
   
@@ -105,9 +107,9 @@ export default function SignIn({ APP_URL }) {
         <Divider sx={{width: '100%'}}> ou </Divider>
 
         <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleFormSubmit}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleFormSubmit}
         >
           {
             ({
@@ -201,8 +203,10 @@ export default function SignIn({ APP_URL }) {
   )
 }
 
-Signin.getServerSideProps = async function() {
+export async function getServerSideProps() {
   return {
-    APP_URL: process.env.APP_URL
+    props: {
+      APP_URL: process.env.APP_URL
+    }
   }
 }
