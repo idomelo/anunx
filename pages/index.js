@@ -13,7 +13,7 @@ import {
 
 import SearchIcon from '@mui/icons-material/Search'
 
-export default function Home() {
+const Home = () => {
   return (
     <TemplateDefault>
       <Container maxWidth="md">
@@ -80,3 +80,5 @@ export default function Home() {
     </TemplateDefault>
   )
 }
+
+export default Home

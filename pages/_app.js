@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react"
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider } from '@emotion/react'
+import CheckAuth from '../src/components/CheckAuth'
 import { ToastyProvider } from '../src/contexts/Toasty'
 import theme from '../src/theme'
 import createEmotionCache from '../src/createEmotionCache'
@@ -24,7 +25,12 @@ export default function MyApp(props) {
         <ThemeProvider theme={theme}>
           <ToastyProvider>
             <CssBaseline />
-            <Component {...pageProps} />
+            {/* if requireAuth property is present, protect the page */}
+            {
+              Component.requireAuth
+                ? <CheckAuth Component={Component} pageProps={pageProps}/>
+                : <Component {...pageProps} />
+            }
           </ToastyProvider>
         </ThemeProvider>
       </SessionProvider>

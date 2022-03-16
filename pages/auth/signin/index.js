@@ -41,8 +41,6 @@ export default function Signin({ APP_URL }) {
   const { setToasty } = useToasty()
   const router = useRouter()
 
-  console.log(APP_URL)
-
   const { data: session, status } = useSession()
   console.log(session, status, router.query.i)
 

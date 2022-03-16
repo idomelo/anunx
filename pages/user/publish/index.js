@@ -20,8 +20,7 @@ import { initialValues, validationSchema } from './formValues'
 import { BoxStyled } from './styles'
 import FileUpload from '../../../src/components/FileUpload'
 
-export default function publish() {
-
+const Publish = () => {
   return (
     <>
       <TemplateDefault>
@@ -238,3 +237,7 @@ export default function publish() {
     </>
   )
 }
+
+Publish.requireAuth = true
+
+export default Publish

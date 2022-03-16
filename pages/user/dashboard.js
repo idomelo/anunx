@@ -8,7 +8,7 @@ import {
 import TemplateDefault from '../../src/templates/Default'
 import Card from '../../src/components/Card'
 
-export default function Home() {
+const Dashboard = () => {
   return (
     <>
     <TemplateDefault>
@@ -86,3 +86,7 @@ export default function Home() {
     </>
   )
 }
+
+Dashboard.requireAuth = true
+
+export default Dashboard
