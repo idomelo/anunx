@@ -36,7 +36,7 @@ import ButtonLoading from '../../../src/components/ButtonLoading'
 import useToasty from '../../../src/contexts/Toasty'
 import { BoxStyled } from '../signup/style'
 
-export default function SignIn() {
+export default function SignIn({ APP_URL }) {
   const [ bgImage, setBgImage ] = useState('')
   const { setToasty } = useToasty()
   const router = useRouter()
@@ -46,13 +46,13 @@ export default function SignIn() {
 
   const handleGoogleLogin = () => {
     signIn('google', {
-      callbackUrl: 'http://localhost:3000/user/dashboard'
+      callbackUrl: `${process.env.APP_URL}/user/dashboard`
     })
   }
 
   const handleFacebookLogin = () => {
     signIn('facebook', {
-      callbackUrl: 'http://localhost:3000/user/dashboard'
+      callbackUrl: `${process.env.APP_URL}/user/dashboard`
     })
   }
 
@@ -60,7 +60,7 @@ export default function SignIn() {
     signIn('credentials', {
       email: values.email,
       password: values.password,
-      callbackUrl: 'http://localhost:3000/user/dashboard'
+      callbackUrl: `${process.env.APP_URL}/user/dashboard`
     })
   }
   
@@ -199,4 +199,10 @@ export default function SignIn() {
       </BoxStyled>
     </Container>
   )
+}
+
+Signin.getServerSideProps = async function() {
+  return {
+    APP_URL: process.env.APP_URL
+  }
 }
