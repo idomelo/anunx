@@ -11,6 +11,7 @@ import dbConnect from '../../src/utils/dbConnect'
 import productsModel  from '../../src/models/products.js'
 import TemplateDefault from '../../src/templates/Default'
 import Card from '../../src/components/Card'
+import { formatCurrency } from '../../src/utils/currency'
 
 const Dashboard = ({ products }) => {
 
@@ -36,7 +37,7 @@ const Dashboard = ({ products }) => {
                 <Card 
                   image={`/uploads/${product.files[0].name}`}
                   title={product.title}
-                  subtitle={product.price}
+                  subtitle={formatCurrency(product.price)}
                   actions={
                     <>
                       <Button size="small">Editar</Button>
