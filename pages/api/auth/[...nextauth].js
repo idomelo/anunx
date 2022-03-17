@@ -25,7 +25,6 @@ export default NextAuth({
         )
 
         const user = res.data
-        console.log(user)
 
         if (user) {
           return user
@@ -47,6 +46,22 @@ export default NextAuth({
 
   jwt: {
     secret: process.env.JWT_TOKEN,
+  },
+
+  callbacks: {
+    async jwt({ token, user, account, profile, isNewUser }) {
+      if (user) {
+        token.uid = user.id
+      }
+
+      return Promise.resolve(token)
+    },
+    
+    async session({ session, user, token }) {
+
+      session.userId = token.uid
+      return session
+    },
   },
   
   database: process.env.MONGODB_URI,

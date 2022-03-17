@@ -80,25 +80,21 @@ export default function Signin({ APP_URL }) {
 
         <Grid container spacing={2} sx={{mt: 1, mb: 2,}}>
           <Grid item xs={12}>
-            <Button 
-            variant="contained"
-            fullWidth 
-            startIcon={<FacebookIcon />}
-            onClick={handleFacebookLogin}
-            >
-              Entrar com o facebook
-            </Button>
+            <ButtonLoading 
+              text="Entrar com o facebook"
+              onClick={handleFacebookLogin}
+              startIcon={<FacebookIcon />}
+              fullWidth={true}
+            />
           </Grid>
 
           <Grid item xs={12}>
-            <Button 
-            variant="contained"
-            fullWidth 
-            startIcon={<GoogleIcon />}
-            onClick={handleGoogleLogin}
-            >
-              Entrar com o Google
-            </Button>
+            <ButtonLoading 
+              text="Entrar com o Google"
+              onClick={handleGoogleLogin}
+              startIcon={<GoogleIcon />}
+              fullWidth={true}
+            />
           </Grid>
         </Grid>
 
@@ -166,17 +162,17 @@ export default function Signin({ APP_URL }) {
                   
                   </Grid>
 
-                  <FormControlLabel
+                  <FormControlLabel sx={{mb: 3}}
                     control={<Checkbox value="remember" color="primary" />}
                     label="Lembrar de mim"
                   />
 
-                  <ButtonLoading 
+                  <ButtonLoading
                     text="Entrar"
                     loading={isSubmitting}
                   />
 
-                  <Grid container>
+                  <Grid container sx={{mt: 2}}>
                     <Grid item xs={12} md={6}>
                       <Link href="#!" variant="body2">
                         Esqueceu sua Senha?

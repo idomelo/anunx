@@ -6,13 +6,14 @@ import {
 } from '@mui/material'
 import {  green } from '@mui/material/colors'
 
-const ButtonLoading = ({text, loading, onClick }) => {
+const ButtonLoading = ({text, loading, onClick, startIcon }) => {
   return (
-    <Box sx={{position: 'relative', mt: 3, mb: 2 }}>
+    <Box sx={{position: 'relative' }}>
       <Button
         type="submit"
         variant="contained"
         fullWidth
+        startIcon={startIcon}
         disabled={loading}
         onClick={onClick}
       >
