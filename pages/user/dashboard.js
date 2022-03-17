@@ -5,10 +5,16 @@ import {
   Grid,
 } from '@mui/material'
 
+import { getSession } from 'next-auth/react'
+import dbConnect from '../../src/utils/dbConnect'
+
+import productsModel  from '../../src/models/products.js'
 import TemplateDefault from '../../src/templates/Default'
 import Card from '../../src/components/Card'
 
-const Dashboard = () => {
+const Dashboard = ({ products }) => {
+
+  console.log(products)
   return (
     <>
     <TemplateDefault>
@@ -24,61 +30,23 @@ const Dashboard = () => {
       <Container maxWidth="md">
         <Grid container spacing={4}>
 
-          <Grid item xs={12} sm={6} md={4}>
-            <Card 
-              image={'https://source.unsplash.com/random'}
-              title="Produto X"
-              subtitle="R$ 80,00"
-              actions={
-                <>
-                  <Button size="small">Editar</Button>
-                  <Button size="small">Remover</Button>
-                </>
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Card 
-              image={'https://source.unsplash.com/random'}
-              title="Produto X"
-              subtitle="R$ 80,00"
-              actions={
-                <>
-                  <Button size="small">Editar</Button>
-                  <Button size="small">Remover</Button>
-                </>
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Card 
-              image={'https://source.unsplash.com/random'}
-              title="Produto X"
-              subtitle="R$ 80,00"
-              actions={
-                <>
-                  <Button size="small">Editar</Button>
-                  <Button size="small">Remover</Button>
-                </>
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Card 
-              image={'https://source.unsplash.com/random'}
-              title="Produto X"
-              subtitle="R$ 80,00"
-              actions={
-                <>
-                  <Button size="small">Editar</Button>
-                  <Button size="small">Remover</Button>
-                </>
-              }
-            />
-          </Grid>
+          {
+            products.map(product => (
+              <Grid key={product._id} item xs={12} sm={6} md={4}>
+                <Card 
+                  image={`/uploads/${product.files[0].name}`}
+                  title={product.title}
+                  subtitle={product.price}
+                  actions={
+                    <>
+                      <Button size="small">Editar</Button>
+                      <Button size="small">Remover</Button>
+                    </>
+                  }
+                />
+              </Grid>
+            ))
+          }
 
         </Grid>
       </Container>
@@ -88,5 +56,18 @@ const Dashboard = () => {
 }
 
 Dashboard.requireAuth = true
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req })
+  await dbConnect()
+
+  const products = await productsModel.find({ 'user.id': session.userId })
+
+  return {
+    props: {
+      products: JSON.parse(JSON.stringify(products)),
+    }
+  }
+}
 
 export default Dashboard
