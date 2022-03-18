@@ -236,8 +236,11 @@ const Publish = ({ userId, image}) => {
 
                   <Container maxWidth="md">
                     <BoxStyled>
-                      <Typography component="h6" variant="h6" gutterBottom>
+                      <Typography component="h6" variant="h6">
                         Dados de Contato:
+                      </Typography>
+                      <Typography component="div" variant="body2" gutterBottom sx={{mb:2}}>
+                        Os visitantes poderão ver esses dados.
                       </Typography>
                       <Stack spacing={1}>
                         <FormControl error={errors.name && touched.name} fullWidth size="small">
