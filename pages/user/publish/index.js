@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Formik } from 'formik'
 import axios from 'axios'
 import { getSession } from "next-auth/react"
@@ -27,6 +28,7 @@ import ButtonLoading from '../../../src/components/ButtonLoading'
 
 
 const Publish = ({ userId, image}) => {
+  const [ loadingButton, setLoadingButton ] = useState(false)
   const { setToasty } = useToasty()
   const router = useRouter()
 
@@ -37,6 +39,7 @@ const Publish = ({ userId, image}) => {
   }
 
   const handleSuccess = () => {
+    setLoadingButton(false)
     setToasty({
       open: true,
       severity: 'success',
@@ -48,16 +51,18 @@ const Publish = ({ userId, image}) => {
 
   const handleError = (err) => {
     console.log(err)
+    setLoadingButton(false)
     setToasty({
       open: true,
       severity: 'error',
-      text: 'Ops! ocorreu um erro, tente novamente.',
+      text: 'Ops! Ocorreu um erro, tente novamente mais tarde.',
     })
   }
 
 
   const handleFormSubmit = (values) => {
     const formData = new FormData()
+    setLoadingButton(true)
 
     for(let field in values) {
       if(field === 'files') {
@@ -69,7 +74,7 @@ const Publish = ({ userId, image}) => {
       }
     }
 
-    axios.post('/api/products', formData)
+    axios.post('/api/products/add', formData)
       .then(handleSuccess)
       .catch( err => {
         handleError(err)
@@ -285,7 +290,7 @@ const Publish = ({ userId, image}) => {
                   <Container sx={{ display: 'flex', justifyContent: 'right', margin: '20px 0'}}>
                     <ButtonLoading 
                       text="Publicar Anúncio"
-                      loading={isSubmitting}
+                      loading={loadingButton}
                     />
                   </Container>
                 </Container>

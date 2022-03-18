@@ -1,5 +1,5 @@
 import nextConnect from 'next-connect'
-import { post } from '../../src/controllers/products'
+import { remove } from '../../../src/controllers/products'
 
 const handler = nextConnect({
   onError: (err, req, res, next) => {
@@ -12,13 +12,6 @@ const handler = nextConnect({
     return
   },
 })
-  .post(post)
-
+  .delete(remove)
 
 export default handler
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
