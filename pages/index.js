@@ -1,23 +1,21 @@
 import Link from 'next/link'
 import slugify from 'slugify'
-import TemplateDefault from '../src/templates/Default'
-import theme from '../src/theme'
-import Card from '../src/components/Card'
 
 import {
   Container,
   Typography,
-  Paper,
-  InputBase,
-  IconButton,
   Grid,
   Link as LinkMUI,
 } from '@mui/material'
 
-import SearchIcon from '@mui/icons-material/Search'
 import dbConnect from '../src/utils/dbConnect'
+import TemplateDefault from '../src/templates/Default'
+import theme from '../src/theme'
+import SearchBar from '../src/components/SearchBar'
+import Card from '../src/components/Card'
 import productsModel from '../src/models/products'
 import { formatCurrency } from '../src/utils/currency'
+
 
 const Home = ({ products }) => {
   return (
@@ -27,20 +25,8 @@ const Home = ({ products }) => {
           O que deseja encontrar?
         </Typography>
 
-        <Paper
-          component="form"
-          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', mt: 3 }}
-        >
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            fullWidth
-            inputProps={{ 'aria-label': 'Ex.: Iphone 7 com garantia' }}
-            placeholder="Ex.: Iphone 7 com garantia"
-          />
-          <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-            <SearchIcon />
-          </IconButton>
-        </Paper>
+        {/* Barra de Pesquisa */}
+        <SearchBar />
 
       </Container>
       <Container maxWidth="md" sx={{padding: theme.spacing(8, 10, 6)}}>
@@ -87,8 +73,6 @@ export async function getServerSideProps() {
   const products = await productsModel.aggregate([{ 
     $sample: { size: 6 } 
   }])
-
-  console.log(products)
 
   return {
     props: {
