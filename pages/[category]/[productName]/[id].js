@@ -61,7 +61,6 @@ function Product({ product }) {
                           title={product.title}
                         />
                       </ImageWrapper>
-
                     ))
                   }
 

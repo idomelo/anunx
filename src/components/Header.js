@@ -28,9 +28,14 @@ export default function ButtonAppBar() {
       <AppBar position="static">
         <Container maxWidth="lg">
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Anunx
-            </Typography>
+            <Link passHref href='/'>
+              <Typography variant="h6" component="div" sx={{ cursor: 'pointer' }}>
+                Anunx
+              </Typography>
+            </Link>
+            <Box sx={{ flexGrow: 1 }}>
+
+            </Box>
             <Link passHref href={
               session ? '/user/publish' : '/auth/signin'
             }>

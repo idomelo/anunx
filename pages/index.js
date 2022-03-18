@@ -1,3 +1,5 @@
+import Link from 'next/link'
+import slugify from 'slugify'
 import TemplateDefault from '../src/templates/Default'
 import theme from '../src/theme'
 import Card from '../src/components/Card'
@@ -9,11 +11,15 @@ import {
   InputBase,
   IconButton,
   Grid,
+  Link as LinkMUI,
 } from '@mui/material'
 
 import SearchIcon from '@mui/icons-material/Search'
+import dbConnect from '../src/utils/dbConnect'
+import productsModel from '../src/models/products'
+import { formatCurrency } from '../src/utils/currency'
 
-const Home = () => {
+const Home = ({ products }) => {
   return (
     <TemplateDefault>
       <Container maxWidth="md">
@@ -43,42 +49,52 @@ const Home = () => {
         </Typography>
         <br />
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={4}>
-            <Card 
-              image={'https://source.unsplash.com/random'}
-              title="Produto X"
-              subtitle="R$ 80,00"
-            />
-          </Grid>
+          {
+            products.map((product) => {
+              // cria url amigável para os produtos
+              const category = slugify(product.category, {
+                lower: true,
+              })
+              const title = slugify(product.title, {
+                lower: true, 
+              })
 
-          <Grid item xs={12} sm={6} md={4}>
-            <Card 
-              image={'https://source.unsplash.com/random'}
-              title="Produto X"
-              subtitle="R$ 80,00"
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Card 
-              image={'https://source.unsplash.com/random'}
-              title="Produto X"
-              subtitle="R$ 80,00"
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Card
-              image={'https://source.unsplash.com/random'}
-              title="Produto X"
-              subtitle="R$ 80,00"
-            />
-          </Grid>
+              return (
+                <Grid key={product._id} item xs={12} sm={6} md={4}>
+                  <Link passHref href={`/${category}/${title}/${product._id}`}>
+                    <LinkMUI target='_blank' sx={{cursor: 'pointer', textDecoration: 'none', }}>
+                      <Card 
+                        image={`/uploads/${product.files[0].name}`}
+                        title={product.title}
+                        subtitle={formatCurrency(product.price)}
+                      />
+                    </LinkMUI>
+                  </Link>
+                </Grid>
+              )
+            })
+          }
         </Grid>
 
       </Container>
     </TemplateDefault>
   )
 }
+
+export async function getServerSideProps() {
+  await dbConnect()
+
+  const products = await productsModel.aggregate([{ 
+    $sample: { size: 6 } 
+  }])
+
+  console.log(products)
+
+  return {
+    props: {
+      products: JSON.parse(JSON.stringify(products))
+    }
+  }
+} 
 
 export default Home
