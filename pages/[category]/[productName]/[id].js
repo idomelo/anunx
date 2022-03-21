@@ -1,4 +1,4 @@
-import Carousel from 'react-material-ui-carousel'
+import CarouselProducts from '../../../src/components/CarouselProducts'
 
 import {
   Container,
@@ -39,32 +39,12 @@ function Product({ product }) {
     <TemplateDefault>
       <Container maxWidth="lg">
         <Grid container spacing={3}>
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <Stack spacing={3}>
-              <BoxStyledProduct>
-                <Carousel
-                  autoPlay= {false}
-                  animation="slide"
-                  navButtonsAlwaysVisible={true}
-                  navButtonsProps={{
-                    style: {
-                      color: 'white'
-                    },
-                  }}
-                >
-                  {
-                    product.files.map(file => ( 
-                      <ImageWrapper key={file.name}>
-                        <CardMedia 
-                          className="cardMedia"
-                          image={`/uploads/${file.name}`}
-                          title={product.title}
-                        />
-                      </ImageWrapper>
-                    ))
-                  }
 
-                </Carousel>
+              {/* Products Gallery Images */}
+              <BoxStyledProduct>
+                <CarouselProducts productFiles={product.files}/>
               </BoxStyledProduct>
 
               <BoxStyledProduct textAlign="left">
@@ -83,12 +63,12 @@ function Product({ product }) {
             </Stack>
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
+            
             <Stack spacing={3}>
-              <Card sx={{
-                padding: 2,
-                boxShadow:' 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
-              }}>
+              
+              <BoxStyledProduct>
+                <Typography component="h6" variant="h6">Anunciante</Typography>
                 <CardHeader
                   avatar={
                     <Avatar src={product.user.image}>
@@ -102,7 +82,7 @@ function Product({ product }) {
                   image={product.user.image}
                   title={product.user.name}
                 />
-              </Card>
+              </BoxStyledProduct>
 
               <BoxStyledProduct>
                 <Typography component="h6" variant="h6">Localização - TO DO</Typography>

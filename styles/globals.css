@@ -14,3 +14,40 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.image-gallery-swipe {
+  background-color: #121212;
+}
+
+.gallery-container {
+  margin-top: 50px;
+}
+
+.appGallery .image-gallery {
+  margin: 0 auto;
+  width: 65%;
+}
+
+@media (max-width: 1024px) {
+  .appGallery .image-gallery {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 601px){
+  .image-gallery-slide img {
+    height: calc(65vh);
+  }
+}
+
+@media only screen and (max-width: 600px){
+  .image-gallery-slide img {
+    height: calc(50vh);
+  }
+}
+
+@media only screen and (max-width: 450px){
+  .image-gallery-slide img {
+    height: calc(40vh);
+  }
+}

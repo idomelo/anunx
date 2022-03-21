@@ -11,7 +11,11 @@ import CheckAuth from '../src/components/CheckAuth'
 import { ToastyProvider } from '../src/contexts/Toasty'
 import theme from '../src/theme'
 import createEmotionCache from '../src/createEmotionCache'
+
 import '../public/nprogress.css'
+import '../styles/globals.css'
+
+
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()

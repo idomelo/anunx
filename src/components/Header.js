@@ -36,10 +36,12 @@ export default function ButtonAppBar() {
             <Box sx={{ flexGrow: 1 }}>
 
             </Box>
-            <Link passHref href={
-              session ? '/user/publish' : '/auth/signin'
-            }>
-              <Button color="inherit" variant="outlined">Anunciar e Vender</Button>
+
+            <Link passHref 
+            href={session ? '/user/publish' : '/auth/signin'}
+            
+            >
+              <Button color="inherit" variant="outlined" sx={{ display: { xs: 'none', md: 'flex' } }}>Anunciar e Vender</Button>
             </Link>
 
             {
