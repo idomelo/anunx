@@ -8,6 +8,7 @@ import {
   Grid,
   Typography,
   Link as LinkMUI,
+  Button,
 } from '@mui/material'
 
 import { styled } from '@mui/material/styles'
@@ -17,12 +18,7 @@ import productsModel from '../../src/models/products'
 import SearchBar from '../../src/components/SearchBar'
 import { formatCurrency } from '../../src/utils/currency'
 import Card from '../../src/components/Card'
-
-const BoxStyledList = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.background.white,
-  padding: theme.spacing(3),
-  boxShadow:' 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
-}))
+import { BoxStyled } from '../../src/components/BoxStyled'
 
 
 function List({ products, q }) {
@@ -36,7 +32,7 @@ function List({ products, q }) {
         </Container>
       
         <Container maxWidth="md">
-          <BoxStyledList>
+          <BoxStyled>
             <Typography component="h6" variant="h6">Anúncios</Typography>
             <Typography component="span" variant="subtitle2">Encontrado(s) {products.length} anúncio(s) para o termo {`"${q}"`}</Typography>
             <br /><br />
@@ -52,7 +48,7 @@ function List({ products, q }) {
                   })
 
                   return (
-                    <Grid key={product._id} item xs={12} sm={6} md={4}>
+                    <Grid key={product._id} item xs={6} sm={6} md={4}>
                       <Link passHref href={`/${category}/${title}/${product._id}`}>
                         <LinkMUI target='_blank' sx={{cursor: 'pointer', textDecoration: 'none', }}>
                           <Card 
@@ -67,7 +63,12 @@ function List({ products, q }) {
                 })
               }
             </Grid>
-          </BoxStyledList>
+            <Link passHref href='/'>
+              <Button variant="outlined" color="secondary" sx={{ mt: 4 }}>
+                Voltar
+              </Button>
+            </Link>
+          </BoxStyled>
         </Container>
       </Stack>
     </TemplateDefault>

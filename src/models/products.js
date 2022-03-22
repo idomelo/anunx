@@ -32,6 +32,8 @@ const schema = new mongoose.Schema({
     type: [filesSchema],
     default: undefined,
   }
+}, {
+  timestamps: true,
 })
 
 export default mongoose.models.products || mongoose.model('products', schema)

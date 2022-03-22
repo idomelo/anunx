@@ -4,7 +4,7 @@ import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
 import { Box } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 
-import { statesList } from '../../../src/utils/statesList'
+import { statesList } from '../utils/statesList'
 
 const containerStyle = {
   borderRadius: '5px',
