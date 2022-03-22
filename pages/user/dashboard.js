@@ -64,30 +64,10 @@ const Dashboard = ({ products }) => {
     .catch(handleError)
   }
 
-  console.log(products)
   return (
-    <>
     <TemplateDefault>
 
-    <Dialog
-        open={openConfirmModal}
-        onClose={handleCloseModal}
-      >
-        <DialogTitle>
-          Deseja realmente excluir este Anúncio?
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Esta ação não poderá ser desfeita.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal}>Cancelar</Button>
-          <Button onClick={handleConfirmRemove} autoFocus>
-            Remover anúncio
-          </Button>
-        </DialogActions>
-      </Dialog>
+      
 
       <Container maxWidth="sm" sx={{textAlign: 'center', width: 'fit-content'}}>
         <Typography component="h1" fontSize='h4.fontSize' align="center">
@@ -105,7 +85,13 @@ const Dashboard = ({ products }) => {
         {/* Exibir "nenhum anuncio publicado" se não houver nenhum anúncio */}
         {
           products.length === 0 && (
-            <Typography component="div" variant="body1" color="textPrimary" align="center" gutterBottom>
+            <Typography 
+              component="div" 
+              variant="body1" 
+              color="secondary" 
+              align="center" 
+              gutterBottom
+            >
               Nenhum Anúncio por aqui... é hora de desapegar e ser feliz! :)
             </Typography>
           )
@@ -113,7 +99,7 @@ const Dashboard = ({ products }) => {
 
         <Grid container spacing={4}>
 
-        {/* Exibir anúncios publicados na dashboard */}
+          {/* Exibir anúncios publicados na dashboard */}
           {
             products.map(product => {
               if (removedProducts.includes(product._id)) return null
@@ -126,8 +112,10 @@ const Dashboard = ({ products }) => {
                     subtitle={formatCurrency(product.price)}
                     actions={
                       <>
-                        <Button size="small">Editar</Button>
-                        <Button size="small" onClick={() => handleClickRemove(product._id)}>Remover</Button>
+                        <Button size="small" color="secondary">Editar</Button>
+                        <Button size="small" color="secondary" onClick={() => handleClickRemove(product._id)}>
+                          Remover
+                        </Button>
                       </>
                     }
                   />
@@ -135,11 +123,30 @@ const Dashboard = ({ products }) => {
               )
             }) 
           }
-
         </Grid>
       </Container>
+
+      {/* Modal de confirmação ao clicar "excluir" */}
+      <Dialog
+          open={openConfirmModal}
+          onClose={handleCloseModal}
+        >
+          <DialogTitle>
+            Deseja realmente excluir este Anúncio?
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Esta ação não poderá ser desfeita.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseModal} color="secondary">Cancelar</Button>
+            <Button onClick={handleConfirmRemove} autoFocus color="secondary">
+              Remover anúncio
+            </Button>
+          </DialogActions>
+      </Dialog>
     </TemplateDefault>
-    </>
   )
 }
 

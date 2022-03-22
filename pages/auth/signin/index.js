@@ -174,14 +174,14 @@ export default function Signin({ APP_URL }) {
 
                   <Grid container sx={{mt: 2}}>
                     <Grid item xs={12} md={6}>
-                      <Link href="#!" variant="body2">
+                      <Link href="#!" variant="body2" color="secondary">
                         Esqueceu sua Senha?
                       </Link>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Typography variant="body2">
                         Não tem uma conta?
-                        <Link href="#!">
+                        <Link href="#!" color="secondary">
                           {" Cadastre-se"}
                         </Link>
                       </Typography>

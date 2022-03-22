@@ -16,12 +16,11 @@ import Card from '../src/components/Card'
 import productsModel from '../src/models/products'
 import { formatCurrency } from '../src/utils/currency'
 
-
 const Home = ({ products }) => {
   return (
     <TemplateDefault>
       <Container maxWidth="md">
-        <Typography component="h1" fontSize='h4.fontSize' align="center">
+        <Typography component="h1" variant='h3' align="center">
           O que deseja encontrar?
         </Typography>
 
@@ -29,12 +28,12 @@ const Home = ({ products }) => {
         <SearchBar />
 
       </Container>
-      <Container maxWidth="md" sx={{padding: theme.spacing(8, 10, 6)}}>
+      <Container maxWidth="md" sx={{padding: theme.spacing(8, 4, 6)}}>
         <Typography component="h2" variant="h4" align="center">
           Destaques
         </Typography>
         <br />
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           {
             products.map((product) => {
               // cria url amigável para os produtos
@@ -46,7 +45,7 @@ const Home = ({ products }) => {
               })
 
               return (
-                <Grid key={product._id} item xs={12} sm={6} md={4}>
+                <Grid key={product._id} item xs={6} sm={4}>
                   <Link passHref href={`/${category}/${title}/${product._id}`}>
                     <LinkMUI sx={{cursor: 'pointer', textDecoration: 'none', }}>
                       <Card 

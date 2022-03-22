@@ -20,7 +20,7 @@ import {
 
 import TemplateDefault from '../../../src/templates/Default'
 import { initialValues, validationSchema } from './formValues'
-import { BoxStyled } from './styles'
+import { BoxStyled } from '../../../src/components/BoxStyled'
 import FileUpload from '../../../src/components/FileUpload'
 import useToasty from '../../../src/contexts/Toasty'
 import ButtonLoading from '../../../src/components/ButtonLoading'

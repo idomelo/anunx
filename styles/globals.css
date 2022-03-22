@@ -8,7 +8,7 @@ body {
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 * {
@@ -26,6 +26,14 @@ a {
 .appGallery .image-gallery {
   margin: 0 auto;
   width: 65%;
+}
+
+.image-gallery-thumbnail .image-gallery-thumbnail-image {
+  width: fit-content !important;
+}
+
+.image-gallery-thumbnail .image-gallery-thumbnail-inner {
+  background-color: #121212;
 }
 
 @media (max-width: 1024px) {

@@ -11,14 +11,14 @@ export default function Card({ image, title, subtitle, actions}) {
     <CardMUI>
       <CardMedia
         image={image}
-        sx={{ paddingTop: '56%'}}
+        sx={{ paddingTop: '56%', backgroundSize: 'contain', backgroundColor: 'primary.main'}}
         title={title}
       />
       <CardContent>
-        <Typography variant="h5" component="h2">
+        <Typography variant="subtitle1" component="h2">
           {title}
         </Typography>
-        <Typography fontWeight="bold">
+        <Typography fontWeight="bold" variant="body2">
           {subtitle}
         </Typography>
       </CardContent>
