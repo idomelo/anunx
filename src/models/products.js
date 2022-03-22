@@ -25,8 +25,7 @@ const schema = new mongoose.Schema({
   user: {
     id: String,
     name: String,
-    email: String,
-    phone: String,
+    local: String,
     image: String,
   },
   files: {

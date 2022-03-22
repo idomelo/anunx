@@ -48,7 +48,7 @@ const Home = ({ products }) => {
               return (
                 <Grid key={product._id} item xs={12} sm={6} md={4}>
                   <Link passHref href={`/${category}/${title}/${product._id}`}>
-                    <LinkMUI target='_blank' sx={{cursor: 'pointer', textDecoration: 'none', }}>
+                    <LinkMUI sx={{cursor: 'pointer', textDecoration: 'none', }}>
                       <Card 
                         image={`/uploads/${product.files[0].name}`}
                         title={product.title}

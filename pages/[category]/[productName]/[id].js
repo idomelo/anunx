@@ -1,4 +1,5 @@
 import CarouselProducts from '../../../src/components/CarouselProducts'
+import MapContainer from './MapContainer'
 
 import {
   Container,
@@ -7,7 +8,6 @@ import {
   Box,
   Typography,
   Chip,
-  Card,
   CardHeader,
   CardMedia,
   Avatar,
@@ -23,15 +23,7 @@ import { formatCurrency } from '../../../src/utils/currency'
 const BoxStyledProduct = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.white,
   padding: theme.spacing(3),
-  boxShadow:' 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
-}))
-
-const ImageWrapper = styled(Card)(({ theme }) => ({
-  height: '100%',
-
-  '& .cardMedia': {
-    paddingTop: '56%'
-  },
+  boxShadow:'0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
 }))
 
 function Product({ product }) {
@@ -76,7 +68,7 @@ function Product({ product }) {
                     </Avatar>
                   }
                   title={product.user.name}
-                  subheader={product.user.email}
+                  subheader={product.user.local}
                 />
                 <CardMedia 
                   image={product.user.image}
@@ -84,8 +76,11 @@ function Product({ product }) {
                 />
               </BoxStyledProduct>
 
-              <BoxStyledProduct>
-                <Typography component="h6" variant="h6">Localização - TO DO</Typography>
+              <BoxStyledProduct sx={{height: '60vh'}}>
+                <Typography component="h6" variant="h6" gutterBottom>Local do Anúncio</Typography>
+
+                <MapContainer local={product.user.local} />
+
               </BoxStyledProduct>
             </Stack>
           </Grid>

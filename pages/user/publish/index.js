@@ -11,7 +11,6 @@ import {
   Typography,
   Select,
   MenuItem,
-  Button,
   FormControl,
   InputLabel,
   OutlinedInput,
@@ -26,6 +25,7 @@ import FileUpload from '../../../src/components/FileUpload'
 import useToasty from '../../../src/contexts/Toasty'
 import ButtonLoading from '../../../src/components/ButtonLoading'
 
+import { statesList } from '../../../src/utils/statesList'
 
 const Publish = ({ userId, image}) => {
   const [ loadingButton, setLoadingButton ] = useState(false)
@@ -170,6 +170,7 @@ const Publish = ({ userId, image}) => {
                           <MenuItem value="Emprego">Emprego</MenuItem>
                           <MenuItem value="Outros">Outros</MenuItem>
                         </Select>
+                        
                         <FormHelperText>
                           {touched.category && errors.category}
                         </FormHelperText>
@@ -240,7 +241,7 @@ const Publish = ({ userId, image}) => {
                         Dados de Contato:
                       </Typography>
                       <Typography component="div" variant="body2" gutterBottom sx={{mb:2}}>
-                        Os visitantes poderão ver esses dados.
+                        Os visitantes poderão ver esses dados no seu Anúncio.
                       </Typography>
                       <Stack spacing={1}>
                         <FormControl error={errors.name && touched.name} fullWidth size="small">
@@ -257,33 +258,34 @@ const Publish = ({ userId, image}) => {
                           </FormHelperText>
                         </FormControl>
 
-                        <FormControl error={errors.email && touched.email} fullWidth size="small">
-                          <InputLabel htmlFor="email">E-mail</InputLabel>
-                          <OutlinedInput 
-                            label="E-mail"
-                            name="email"
-                            id="email"
+                        <FormControl fullWidth size="small" error={errors.local && touched.local}>
+                          <Select
+                            displayEmpty
+                            name="local"
+                            value={values.local}
+                            fullWidth
                             onChange={handleChange}
-                            value={values.email}
-                          />
+                            renderValue={(selected) => {
+                              if (selected.length === 0) {
+                                return <em>Localidade do Anúncio(selecione um Estado <strong>ALEATÓRIO</strong>)</em>
+                              }
+                              return selected
+                            }}
+                          > 
+                            <MenuItem disabled value=""><em>Localidade do Anúncio(selecione um Estado <strong>ALEATÓRIO</strong>)</em></MenuItem>
+                            
+                            {
+                              Object.keys(statesList).map((state) => (
+                                <MenuItem key={state} value={state}>{state}</MenuItem>
+                              ))
+                            }
+
+                          </Select>
                           <FormHelperText>
-                            {touched.email && errors.email}
+                            {touched.local && errors.local}
                           </FormHelperText>
                         </FormControl>
 
-                        <FormControl error={errors.phone && touched.phone} fullWidth size="small">
-                          <InputLabel htmlFor="phone">Telefone</InputLabel>
-                          <OutlinedInput 
-                            label="Telefone"
-                            name="phone"
-                            id="phone"
-                            onChange={handleChange}
-                            value={values.phone}
-                          />
-                          <FormHelperText>
-                            {touched.phone && errors.phone}
-                          </FormHelperText>
-                        </FormControl>
                       </Stack>
                     </BoxStyled>
                   </Container>

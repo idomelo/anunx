@@ -58,8 +58,7 @@ const post = async (req, res) => {
       description,
       price,
       name,
-      email,
-      phone,
+      local,
       userId,
       image,
     } = fields
@@ -72,8 +71,7 @@ const post = async (req, res) => {
       user: {
         id: userId,
         name,
-        email,
-        phone,
+        local,
         image,
       },
       files: filesToSave,
