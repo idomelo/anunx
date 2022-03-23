@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import {useDropzone} from 'react-dropzone'
 import { 
   Box, 
@@ -12,10 +14,14 @@ import {
   Thumb,
   Mask,
 } from './styles.js'
+import { SignalWifiStatusbarNullTwoTone } from '@mui/icons-material'
 
 export default function FileUpload({ files, errors, touched, setFieldValue }) {
+  const [ errorMessage, setErrorMessage ] = useState(null)
+
   const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/*',
+    accept: 'image/jpg, image/jpeg, image/png',
+    maxSize: 5000000,
     onDrop: (acceptedFile) => {
       const newFiles = acceptedFile.map(file => {
         // Para cada arquivo, cria objeto com arquivo recebido e cria URL para acessá-lo
@@ -28,6 +34,12 @@ export default function FileUpload({ files, errors, touched, setFieldValue }) {
         ...files,  
         ...newFiles,
       ])
+    },
+    onDropRejected: () => {
+      setErrorMessage('Formato de arquivo não permitido')
+    },
+    onDropAccepted: () => {
+      setErrorMessage(null)
     }
   })
 
@@ -43,11 +55,14 @@ export default function FileUpload({ files, errors, touched, setFieldValue }) {
         Imagens
       </Typography>
       <Typography component="h6" variant="body2">
-        A Primeira imagem é a Principal do seu Anúncio.
+        A Primeira imagem é a Principal. 
+      </Typography>
+      <Typography variant="caption">
+        Formatos: .png .jpg .jpeg. Tamanho máximo: 5mb 
       </Typography>
       {
-        errors && touched 
-          ? <Typography variant="body2" color="error" gutterBottom>{errors}</Typography>
+        errorMessage || errors && touched 
+          ? <Typography variant="body2" color="error" gutterBottom>{errorMessage || errors}</Typography>
           : null
       }
       <Box sx={{
@@ -83,7 +98,7 @@ export default function FileUpload({ files, errors, touched, setFieldValue }) {
                 : null
               }
               <Mask className="mask">
-                <IconButton color="secondary" size="large" onClick={() => handleRemoveFile(file.name)}>
+                <IconButton color="primary" size="large" onClick={() => handleRemoveFile(file.name)}>
                   <DeleteForeverIcon />
                 </IconButton>
               </Mask>

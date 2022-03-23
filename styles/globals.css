@@ -8,6 +8,10 @@ body {
 
 a {
   color: inherit;
+}
+
+/* text decoration do Logotipo Anunx */
+.css-1cndkqf-MuiToolbar-root a {
   text-decoration: none !important;
 }
 

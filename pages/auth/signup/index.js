@@ -47,7 +47,7 @@ export default function SignUp() {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <BoxStyled>
-          <Link passHref href='/'>
+          <Link href='/'>
             <Avatar sx={{ m: 1}} >
               <Image src='/shop.svg' layout='fill' alt='' />
             </Avatar>
@@ -154,7 +154,7 @@ export default function SignUp() {
 
                     <Grid container justifyContent="flex-end">
                       <Grid item>
-                        <Link href="#!" variant="body2">
+                        <Link href="/auth/signin" color="secondary" variant="body2">
                           Já tem uma conta? Entrar
                         </Link>
                       </Grid>

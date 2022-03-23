@@ -1,8 +1,8 @@
 import axios from "axios"
 import NextAuth from "next-auth"
 import CredentialsProvider  from "next-auth/providers/credentials"
-import FacebookProvider from "next-auth/providers/facebook";
-import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook"
+import GoogleProvider from "next-auth/providers/google"
 
 export default NextAuth({
   providers: [
@@ -49,15 +49,14 @@ export default NextAuth({
   },
 
   callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user }) {
       if (user) {
-        token.uid = user.id
+        token.uid = user.id? user.id : user._id
       }
-
       return Promise.resolve(token)
     },
     
-    async session({ session, user, token }) {
+    async session({ session, token }) {
 
       session.userId = token.uid
       return session

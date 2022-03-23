@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Formik } from 'formik'
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useSession, signIn, signOut } from "next-auth/react"
@@ -21,7 +20,6 @@ import {
   OutlinedInput,
   FormHelperText,
   Alert,
-  Button,
   Container,
 } from '@mui/material'
 
@@ -30,7 +28,6 @@ import {
   Google as GoogleIcon,
 } from '@mui/icons-material'
 
-import TemplateDefault from '../../../src/templates/Default'
 import { initialValues, validationSchema } from './formValues'
 import ButtonLoading from '../../../src/components/ButtonLoading'
 import useToasty from '../../../src/contexts/Toasty'
@@ -42,7 +39,6 @@ export default function Signin({ APP_URL }) {
   const router = useRouter()
 
   const { data: session, status } = useSession()
-  console.log(session, status, router.query.i)
 
   const handleGoogleLogin = () => {
     signIn('google', {
@@ -69,7 +65,7 @@ export default function Signin({ APP_URL }) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <BoxStyled>
-        <Link passHref href='/'>
+        <Link href='/'>
           <Avatar sx={{ m: 1}} >
             <Image src='/shop.svg' layout='fill' alt='' />
           </Avatar>
@@ -181,7 +177,7 @@ export default function Signin({ APP_URL }) {
                     <Grid item xs={12} md={6}>
                       <Typography variant="body2">
                         Não tem uma conta?
-                        <Link href="#!" color="secondary">
+                        <Link href="/auth/signup" color="secondary">
                           {" Cadastre-se"}
                         </Link>
                       </Typography>

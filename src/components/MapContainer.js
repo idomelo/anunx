@@ -21,7 +21,8 @@ export default function MapContainer({local}) {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyCT0x3emTykuhb6PUp1Fau7NcoxAQgxQuQ"
+    googleMapsApiKey: process.env.API_KEY
+
   })
 
   return isLoaded ? (

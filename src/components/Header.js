@@ -37,7 +37,7 @@ export default function ButtonAppBar() {
               component="div"
               sx={{ cursor: 'pointer', flexGrow: 1, display: 'flex' }}
             >
-              <Link passHref href='/'>
+              <Link passHref href='/' styles={{ textDecoration: 'none '}}>
                 Anunx
               </Link>
             </Typography>
@@ -46,29 +46,31 @@ export default function ButtonAppBar() {
 
             <Box sx={{ flexGrow: 0, display:'flex' }}>
               {
-                !session 
-                  ? (
-                    <Link passHref href='/auth/signin'>
-                      <Button 
-                        color="inherit" 
-                        variant="outlined" 
-                        sx={{ display: 'flex' }}
-                      >
-                        Anunciar e Vender
-                      </Button>
-                    </Link>
-                  ) : <Button 
-                        sx={{ marginLeft: 2 }} 
-                        onClick={(e) => setAnchorUserMenu(e.currentTarget)}
-                        size="medium" 
-                        color="secondary" startIcon=
-                        {
-                          session.user.image
-                            ? <Avatar src={session.user.image} />
-                            : <AccountCircleIcon />
-                        }>
-                        {session.user.name}
-                      </Button>
+                session 
+                ?(
+                  <Button 
+                  sx={{ marginLeft: 2 }} 
+                  onClick={(e) => setAnchorUserMenu(e.currentTarget)}
+                  size="large" 
+                  color="secondary" startIcon=
+                  {
+                    session.user.image
+                      ? <Avatar src={session.user.image} />
+                      : <AccountCircleIcon size="large"/>
+                  }>
+                  {session.user.name}
+                  </Button>
+                ):(
+                  <Link passHref href='/auth/signin'>
+                    <Button 
+                      color="inherit" 
+                      variant="outlined" 
+                      sx={{ display: 'flex' }}
+                    >
+                      Anunciar e Vender
+                    </Button>
+                  </Link>
+                )
               }
             </Box>
 

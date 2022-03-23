@@ -22,7 +22,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Todos os direitos Reservados © '}
-      <Link color="inherit" href="https://github.com/idomelo">
+      <Link color="inherit" href="https://github.com/idomelo" target="_blank" rel="noopener noreferrer">
         Ido Melo
       </Link>{' '}
       {new Date().getFullYear()}

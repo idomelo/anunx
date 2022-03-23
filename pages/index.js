@@ -70,7 +70,7 @@ export async function getServerSideProps() {
   await dbConnect()
 
   const products = await productsModel.aggregate([{ 
-    $sample: { size: 6 } 
+    $sample: { size: 10 } 
   }])
 
   return {
