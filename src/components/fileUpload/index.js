@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import { useDropzone } from 'react-dropzone'
 
-import {useDropzone} from 'react-dropzone'
 import { 
   Box, 
   IconButton, 
@@ -14,7 +14,6 @@ import {
   Thumb,
   Mask,
 } from './styles.js'
-import { SignalWifiStatusbarNullTwoTone } from '@mui/icons-material'
 
 export default function FileUpload({ files, errors, touched, setFieldValue }) {
   const [ errorMessage, setErrorMessage ] = useState(null)
