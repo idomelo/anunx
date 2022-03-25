@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const filesSchema = new mongoose.Schema({
   name: String,
-  path: String,
+  url: String,
 })
 
 const schema = new mongoose.Schema({
