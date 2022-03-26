@@ -49,7 +49,7 @@ const Home = ({ products }) => {
                   <Link passHref href={`/${category}/${title}/${product._id}`}>
                     <LinkMUI sx={{cursor: 'pointer', textDecoration: 'none', }}>
                       <Card 
-                        image={`/uploads/${product.files[0].name}`}
+                        image={product.files[0].url}
                         title={product.title}
                         subtitle={formatCurrency(product.price)}
                       />

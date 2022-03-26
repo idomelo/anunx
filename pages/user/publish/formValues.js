@@ -20,7 +20,7 @@ export const validationSchema = yup.object().shape({
   description: yup.string()
     .required('*Campo Obrigatório')
     .min(25, 'Escreva uma Descrição maior, com no mínimo 25 caracteres')
-    .max(250, 'Descrição muito grande, no máximo 250 caracteres são permitidos'),
+    .max(400, 'Descrição muito grande, no máximo 400 caracteres são permitidos'),
   price: yup.number()
     .typeError('Este campo deve conter apenas números')
     .required('*Campo Obrigatório')

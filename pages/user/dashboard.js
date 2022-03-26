@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 import {
@@ -24,14 +24,16 @@ import useToasy from '../../src/contexts/Toasty'
 
 const Dashboard = ({ products }) => {
   const [ productId, setProductId ] = useState()
+  const [ productFiles, setProductFiles ] = useState()
   const [ removedProducts, setRemovedProducts ] = useState([])
   const [openConfirmModal, setOpenConfirmModal] = useState(false)
   const { setToasty } = useToasy()
 
   const handleCloseModal = () => setOpenConfirmModal(false)
 
-  const handleClickRemove = (productId) => {
+  const handleClickRemove = (productId, productFiles) => {
     setProductId(productId)
+    setProductFiles(productFiles)
     setOpenConfirmModal(true)
   }
 
@@ -57,7 +59,8 @@ const Dashboard = ({ products }) => {
   const handleConfirmRemove = () => {
     axios.delete('/api/products/delete', {
       data: {
-        id: productId
+        id: productId,
+        files: productFiles,
       }
     })
     .then(handleSuccess)
@@ -105,15 +108,15 @@ const Dashboard = ({ products }) => {
               if (removedProducts.includes(product._id)) return null
 
               return (
-                <Grid key={product._id} item xs={12} sm={6} md={4}>
+                <Grid key={product._id} item xs={6} sm={4}>
                   <Card 
-                    image={`/uploads/${product.files[0].name}`}
+                    image={product.files[0].url}
                     title={product.title}
                     subtitle={formatCurrency(product.price)}
                     actions={
                       <>
                         <Button size="small" color="secondary">Editar</Button>
-                        <Button size="small" color="secondary" onClick={() => handleClickRemove(product._id)}>
+                        <Button size="small" color="secondary" onClick={() => handleClickRemove(product._id, product.files)}>
                           Remover
                         </Button>
                       </>

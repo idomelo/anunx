@@ -46,7 +46,7 @@ const Publish = ({ userId, image}) => {
       text: 'Anúncio cadastrado com sucesso!',
     })
 
-    // router.push('/user/dashboard')
+    router.push('/user/dashboard')
   }
 
   const handleError = (err) => {
@@ -73,9 +73,7 @@ const Publish = ({ userId, image}) => {
       } else {
         formData.append(field, values[field])
       }
-    }    
-
-    // console.log(formData())
+    }
 
     axios.post('/api/products/add', formData)
       .then(handleSuccess)

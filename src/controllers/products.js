@@ -58,10 +58,12 @@ const post = async (req, res) => {
 
       const newFilename = filesWrapper[i].original_filename
       const newUrl = filesWrapper[i].secure_url
+      const publicId = filesWrapper[i].public_id
 
       filesToSave.push({
         name: newFilename,
         url: newUrl,
+        publicId,
       })
     }
 
@@ -104,6 +106,11 @@ const remove = async (req, res) => {
   await dbConnect()
 
   const id = req.body.id
+  const files = req.body.files
+
+  for(let i = 0; i < files.length; i++){
+    cloudinary.v2.uploader.destroy(files[i].publicId) 
+  }
 
   const deleted = await productsModel.findOneAndDelete({ _id: id })
 

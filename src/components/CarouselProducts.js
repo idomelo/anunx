@@ -7,14 +7,14 @@ export default function CarouselProducts({ productFiles }) {
     showBullets: true,
     infinite: true,
     showThumbnails: true,
-    showFullscreenButton: false,
-    showGalleryFullscreenButton: false,
+    showFullscreenButton: true,
+    showGalleryFullscreenButton: true,
     showPlayButton: false,
     showGalleryPlayButton: false,
     showNav: true,
     isRTL: false,
     slideOnThumbnailOver: false,
-    thumbnailPosition: 'right',
+    thumbnailPosition: 'bottom',
     useWindowKeyDown: true,
   }
 
@@ -22,8 +22,8 @@ export default function CarouselProducts({ productFiles }) {
 
   productFiles.map(file => (
     images.push({
-      original: `/uploads/${file.name}`,
-      thumbnail: `/uploads/${file.name}`,
+      original: file.url,
+      thumbnail: file.url,
       originalClass: 'featured-slide',
       thumbnailClass: 'featured-thumb',
       thumbnailHeight: 70,

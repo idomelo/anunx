@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 const filesSchema = new mongoose.Schema({
   name: String,
   url: String,
+  publicId: String,
 })
 
 const schema = new mongoose.Schema({

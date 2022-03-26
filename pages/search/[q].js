@@ -50,9 +50,9 @@ function List({ products, q }) {
                   return (
                     <Grid key={product._id} item xs={6} sm={6} md={4}>
                       <Link passHref href={`/${category}/${title}/${product._id}`}>
-                        <LinkMUI target='_blank' sx={{cursor: 'pointer', textDecoration: 'none', }}>
+                        <LinkMUI sx={{cursor: 'pointer', textDecoration: 'none', }}>
                           <Card 
-                            image={`/uploads/${product.files[0].name}`}
+                            image={product.files[0].url}
                             title={product.title}
                             subtitle={formatCurrency(product.price)}
                           />
