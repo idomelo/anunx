@@ -1,44 +1,24 @@
-import React from 'react'
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
-
-import { Box } from '@mui/material'
-import CircularProgress from '@mui/material/CircularProgress'
+import Map, {Marker, NavigationControl} from 'react-map-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
 
 import { statesList } from '../utils/statesList'
-
-const containerStyle = {
-  borderRadius: '5px',
-  width: '100%',
-  height: '90%'
-};
 
 export default function MapContainer({local}) {
 
   const position = {
-    lat: statesList[local][0],
-    lng: statesList[local][1],
+    latitude: statesList[local][0],
+    longitude: statesList[local][1],
+    zoom: 5,
   }
-
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: process.env.API_KEY
-
-  })
-
-  return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={position}
-      zoom={6}
+  return (
+    <Map
+      initialViewState={position}
+      style={{width: '100%', height: '80%', borderRadius: 5 }}
+      mapStyle="mapbox://styles/mapbox/streets-v11"
+      mapboxAccessToken={process.env.NEXT_PUBLIC_MAP_BOX_ACCESS_TOKEN}
     >
-      <Marker position={position}/>
-    </GoogleMap>
-  ) : <Box sx={{ 
-        display:'flex', 
-        height: '80%', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-      }}>
-        <CircularProgress />
-      </Box>
+      <Marker longitude={position.longitude} latitude={position.latitude} color="red" />
+      <NavigationControl />
+    </Map>
+  )
 }

@@ -4,7 +4,7 @@ import "react-image-gallery/styles/css/image-gallery.css"
 export default function CarouselProducts({ productFiles }) {
   const CarouselProps = {
     showIndex: false,
-    showBullets: true,
+    showBullets: false,
     infinite: true,
     showThumbnails: true,
     showFullscreenButton: true,
@@ -13,7 +13,7 @@ export default function CarouselProducts({ productFiles }) {
     showGalleryPlayButton: false,
     showNav: true,
     isRTL: false,
-    slideOnThumbnailOver: false,
+    slideOnThumbnailOver: true,
     thumbnailPosition: 'bottom',
     useWindowKeyDown: true,
   }
