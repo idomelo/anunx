@@ -21,7 +21,6 @@ const post = async (req, res) => {
   // Formidable receive the form
   const form = new formidable.IncomingForm({
     multiples: true,
-    uploadDir: 'public/uploads',
     keepExtensions: true,
   })
 
@@ -33,41 +32,38 @@ const post = async (req, res) => {
 
     // Pick the files in form
     const { files } = data
-
+    
     // transform files in an array
     const filesArray = files instanceof Array
     ? files
     : [files]
 
+
+    let uploadedImg = []
+    const filesWrapper = []
     const filesToSave = []
 
-    filesArray.forEach(file => {
-      const filepath = file.path
-
-      // Upload file in 'filepath' to cloudinary
-      cloudinary.v2.uploader.upload(filepath, {
+    for(let i = 0; i < filesArray.length; i++){
+      uploadedImg = await cloudinary.v2.uploader.upload(filesArray[i].path, {
         resource_type: 'image',
         access_type: 'anonymous',
-      }, (error, result) => {
-      
+      }, (error) => {
         if(error) {
           console.error(error)
           return res.status(500).json({ success: false })
         }
-
-        // "result" retorna um objeto com todos os dados
-        // da imagem salva na nuvem, 
-        // como nome original e url para acesso
-        filesToSave.push({
-          name: result.original_filename,
-          url: result.secure_url,
-        })
-        
-        // Aqui o array 'filesToSave' é preenchido corretamente
-        // com os nomes e urls das imagens
-        console.log('Array preenchido corretamente--->', filesToSave) 
       })
-    })
+
+      filesWrapper.push(uploadedImg)
+
+      const newFilename = filesWrapper[i].original_filename
+      const newUrl = filesWrapper[i].secure_url
+
+      filesToSave.push({
+        name: newFilename,
+        url: newUrl,
+      })
+    }
 
     const {
       title,
@@ -91,8 +87,7 @@ const post = async (req, res) => {
         local,
         image,
       },
-      files: filesToSave, // Aqui o array 'filesToSave' deveria estar vindo
-      // com o nome e url das imagens, mas está vindo vazio
+      files: filesToSave,
     })
 
     const register = await product.save()
