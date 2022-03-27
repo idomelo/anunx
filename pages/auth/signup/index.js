@@ -19,8 +19,8 @@ import {
 } from '@mui/material'
 
 import TemplateDefault from '../../../src/templates/Default'
-import { initialValues, validationSchema } from './formValues'
-import { BoxStyled } from './style'
+import initialValues, { validationSchema } from '../../../src/utils/formValuesSIgnup'
+import BoxStyled from './style'
 import ButtonLoading from '../../../src/components/ButtonLoading'
 import useToasty from '../../../src/contexts/Toasty'
 import Image from 'next/image'

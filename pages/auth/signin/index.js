@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { useState } from 'react'
+// import { useState } from 'react'
 import { Formik } from 'formik'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { useSession, signIn, signOut } from "next-auth/react"
+import { signIn } from "next-auth/react"
 
 import {
   Avatar,
@@ -28,17 +28,17 @@ import {
   Google as GoogleIcon,
 } from '@mui/icons-material'
 
-import { initialValues, validationSchema } from './formValues'
+import initialValues, { validationSchema } from '../../../src/utils/formValuesSignin'
 import ButtonLoading from '../../../src/components/ButtonLoading'
-import useToasty from '../../../src/contexts/Toasty'
-import { BoxStyled } from '../signup/style'
+// import useToasty from '../../../src/contexts/Toasty'
+import BoxStyled from '../signup/style'
 
 export default function Signin({ APP_URL }) {
-  const [ bgImage, setBgImage ] = useState('')
-  const { setToasty } = useToasty()
+  // const [ bgImage, setBgImage ] = useState('')
+  // const { setToasty } = useToasty()
   const router = useRouter()
 
-  const { data: session, status } = useSession()
+  // const { data: session, status } = useSession()
 
   const handleGoogleLogin = () => {
     signIn('google', {
@@ -80,7 +80,7 @@ export default function Signin({ APP_URL }) {
               text="Entrar com o facebook"
               onClick={handleFacebookLogin}
               startIcon={<FacebookIcon />}
-              fullWidth={true}
+              fullWidth
             />
           </Grid>
 
@@ -89,7 +89,7 @@ export default function Signin({ APP_URL }) {
               text="Entrar com o Google"
               onClick={handleGoogleLogin}
               startIcon={<GoogleIcon />}
-              fullWidth={true}
+              fullWidth
             />
           </Grid>
         </Grid>

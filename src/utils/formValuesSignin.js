@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-export const initialValues = {
+const initialValues = {
   email: '',
   password: '',
 }
@@ -13,3 +13,5 @@ export const validationSchema = yup.object().shape({
     .required('*A senha é Obrigatória')
     .min(6, 'mínimo de 6 caracteres'),
 })
+
+export default initialValues

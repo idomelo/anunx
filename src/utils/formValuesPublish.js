@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-export const initialValues = { 
+const initialValues = { 
   title: '',
   category: '',
   description:'',
@@ -33,3 +33,5 @@ export const validationSchema = yup.object().shape({
     .required('*Campo Obrigatório')
     .min(1, 'Envie pelo menos 1 foto')
 })
+
+export default initialValues

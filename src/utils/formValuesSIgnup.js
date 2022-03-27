@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-export const initialValues = {
+const initialValues = {
   name: '',
   email: '',
   password: '',
@@ -22,3 +22,5 @@ export const validationSchema = yup.object().shape({
   .required('*Confirmação Obrigatória')
   .oneOf([yup.ref('password'), null], 'As senhas precisam ser iguais')
 })
+
+export default initialValues

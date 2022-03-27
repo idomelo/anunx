@@ -19,8 +19,8 @@ import {
 } from '@mui/material'
 
 import TemplateDefault from '../../../src/templates/Default'
-import { initialValues, validationSchema } from './formValues'
-import { BoxStyled } from '../../../src/components/BoxStyled'
+import initialValues, { validationSchema } from '../../../src/utils/formValuesPublish'
+import BoxStyled from '../../../src/components/BoxStyled'
 import FileUpload from '../../../src/components/FileUpload'
 import useToasty from '../../../src/contexts/Toasty'
 import ButtonLoading from '../../../src/components/ButtonLoading'

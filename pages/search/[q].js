@@ -18,7 +18,7 @@ import productsModel from '../../src/models/products'
 import SearchBar from '../../src/components/SearchBar'
 import { formatCurrency } from '../../src/utils/currency'
 import Card from '../../src/components/Card'
-import { BoxStyled } from '../../src/components/BoxStyled'
+import BoxStyled from '../../src/components/BoxStyled'
 
 
 function List({ products, q }) {

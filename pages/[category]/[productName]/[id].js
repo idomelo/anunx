@@ -16,7 +16,7 @@ import TemplateDefault from '../../../src/templates/Default'
 import productsModel from '../../../src/models/products'
 import dbConnect from '../../../src/utils/dbConnect'
 import { formatCurrency } from '../../../src/utils/currency'
-import { BoxStyled } from '../../../src/components/BoxStyled'
+import BoxStyled from '../../../src/components/BoxStyled'
 
 function Product({ product }) {
   

@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles'
 import { Box } from '@mui/system'
 
-export const BoxStyled = styled(Box)(({ theme }) => ({
+const BoxStyled = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -16,3 +16,5 @@ export const BoxStyled = styled(Box)(({ theme }) => ({
     padding: 0,
   },
 }))
+
+export default BoxStyled
